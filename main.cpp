@@ -117,13 +117,89 @@ public:
 
         char pub_list_name_pub[N];
 
-        void save(){
+        void counter(){
 
         }
+
+        void save(){
+            std::cout << "saving..." << std::endl;
+            Publishers *node_element = Head;
+            while (node_element != NULL)
+            {
+                std::string loco = node_element->index;
+                loco += " ";
+                loco += node_element->name;
+                loco += " ";
+                loco += node_element->address;
+                loco += "\n";
+
+                std::ofstream out;
+                out.open("E:\\database_publishers.txt", std::ofstream::out | std::ofstream::app);
+                out << loco;
+                out.close();
+
+                node_element = node_element->next;// двигаемся к следующему элементу
+            }
+            std::cout << "Your data is saved!" << std::endl;
+        }
+
+        // переменные для переноса из функции считывателя в загрузчик
+        string first;
+        char second[N];
+        char third[N];
 
         void load(){
+            std::ifstream file("E:\\database_publishers.txt");
+            std::string data_from_file;
+            int local_index = 1;
+            string loco; // локальная переменная для изменения данных
+            while (getline(file, data_from_file, ' ')) {
+                switch (local_index) {
+                    case 1:
+                    {
+                        Publishers_list::first = atoi(data_from_file.c_str());
+                        local_index += 1;
+                        break;
+                    }
+
+                    case 2: //name char
+                    {
+                        strcpy(second, data_from_file.c_str());
+                        local_index += 1;
+                        break;
+                    }
+
+                    case 3: // release num int
+                    {
+                        strcpy(second, data_from_file.c_str());
+                        adder();
+                        local_index = 1;
+                        break;
+                    }
+                }
+            }
+            file.close();
+            std::cout << "load is successfully done!" << std::endl;
+        }
+
+        void adder(){
+            Publishers *node_element = new Publishers;
+            node_element->next = NULL;
+            node_element->index = first;
+            strcpy(node_element->name, second);
+            strcpy(node_element->address, third);
+
+            if (Head != NULL) {
+                node_element->prev = Tail;
+                Tail->next = node_element;
+                Tail = node_element;
+            } else {
+                node_element->prev = NULL;
+                Head =Tail = node_element;
+            }
 
         }
+
         void show(){
             Publishers *node_element = Head;
             while (node_element != NULL)
