@@ -121,9 +121,9 @@ public:
             Publishers *node_element = Head;
             while (node_element != NULL)
             {
-                std::cout << '|'  <<  setfill(' ') << setw(5) << "id - " <<  setfill(' ') << setw(5) << node_element->index
+                std::cout << '|'  <<  setfill(' ') << setw(5) << "index - " <<  setfill(' ') << setw(5) << node_element->index
                           << "|" <<  setfill(' ') << setw(7) << "name - " <<  setfill(' ') << setw(20) << node_element->name
-                          << "|" <<  setfill(' ') << setw(15) << "price - " <<  setfill(' ') << setw(30) << node_element->address << "|" << std::endl;
+                          << "|" <<  setfill(' ') << setw(15) << "adress - " <<  setfill(' ') << setw(30) << node_element->address << "|" << std::endl;
 
                 node_element = node_element->next;
             }
@@ -178,7 +178,16 @@ public:
                 std::cin >> user_input;
                 std::cout << "you entered - " << user_input << std::endl;
                 while (node_element != NULL){
-                    if user_input
+                    string loco_1, loco_2;
+                    loco_1 = user_input;
+                    loco_2 = node_element->name;
+                    if (loco_1 == loco_2){
+                        std::cout << "OK" << std::endl;
+                        strcpy(pub_list_name_pub, node_element->name);
+                    }
+                    else{
+                        std::cout << "its not work!!!!!" << std::endl;
+                    }
                     node_element = node_element->next;
                 }
 
