@@ -117,13 +117,20 @@ public:
 
         char pub_list_name_pub[N];
 
+        void save(){
+
+        }
+
+        void load(){
+
+        }
         void show(){
             Publishers *node_element = Head;
             while (node_element != NULL)
             {
                 std::cout << '|'  <<  setfill(' ') << setw(5) << "index - " <<  setfill(' ') << setw(5) << node_element->index
                           << "|" <<  setfill(' ') << setw(7) << "name - " <<  setfill(' ') << setw(20) << node_element->name
-                          << "|" <<  setfill(' ') << setw(15) << "adress - " <<  setfill(' ') << setw(30) << node_element->address << "|" << std::endl;
+                          << "|" <<  setfill(' ') << setw(15) << "address - " <<  setfill(' ') << setw(30) << node_element->address << "|" << std::endl;
 
                 node_element = node_element->next;
             }
