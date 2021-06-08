@@ -31,7 +31,7 @@
 
 //using namespace std;
 
-const int N = 15;
+const int N = 15;// играл с размером чаров... проиграл
 int user_input;
 
 struct Magazine{
