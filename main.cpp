@@ -29,9 +29,9 @@
 
  */
 
-using namespace std;
+//using namespace std;
 
-const int N = 128;
+const int N = 15;
 int user_input;
 
 struct Magazine{
@@ -51,7 +51,7 @@ struct Magazine{
 
 struct Publishers{
 public:
-    string index;
+    std::string index;
     char name[N];
     char address[N];
     struct Publishers *next;
@@ -87,9 +87,9 @@ public:
         Magazine *node_element = Head;
         while (node_element != NULL)
         {
-            std::cout << '|'  <<  setfill(' ') << setw(5) << "id - " <<  setfill(' ') << setw(5) << node_element->id
-                      << "|" <<  setfill(' ') << setw(7) << "name - " <<  setfill(' ') << setw(20) << node_element->name
-                      << "|" <<  setfill(' ') << setw(15) << "price - " <<  setfill(' ') << setw(30) << node_element->price << "|" << std::endl;
+            std::cout << '|'  <<  std::setfill(' ') << std::setw(5) << "id - " <<  std::setfill(' ') << std::setw(5) << node_element->id
+                      << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(20) << node_element->name
+                      << "|" <<  std::setfill(' ') << std::setw(15) << "price - " <<  std::setfill(' ') << std::setw(30) << node_element->price << "|" << std::endl;
 
             node_element = node_element->next;
         }
@@ -109,15 +109,21 @@ public:
     }
 
 
-    string test;
-
     class Publishers_list{
     public:
         Publishers *Head, *Tail;
 
         char pub_list_name_pub[N];
 
-        void counter(){
+        int counter(){
+            Publishers *node_element = Head;
+            int index_loco = 0;
+            while (node_element != NULL)
+            {
+                index_loco ++;
+                node_element = node_element->next;
+            }
+            return index_loco;
 
         }
 
@@ -144,7 +150,7 @@ public:
         }
 
         // переменные для переноса из функции считывателя в загрузчик
-        string first;
+        std::string first;
         char second[N];
         char third[N];
 
@@ -152,7 +158,7 @@ public:
             std::ifstream file("E:\\database_publishers.txt");
             std::string data_from_file;
             int local_index = 1;
-            string loco; // локальная переменная для изменения данных
+            std::string loco; // локальная переменная для изменения данных
             while (getline(file, data_from_file, ' ')) {
                 switch (local_index) {
                     case 1:
@@ -204,9 +210,9 @@ public:
             Publishers *node_element = Head;
             while (node_element != NULL)
             {
-                std::cout << '|'  <<  setfill(' ') << setw(5) << "index - " <<  setfill(' ') << setw(5) << node_element->index
-                          << "|" <<  setfill(' ') << setw(7) << "name - " <<  setfill(' ') << setw(20) << node_element->name
-                          << "|" <<  setfill(' ') << setw(15) << "address - " <<  setfill(' ') << setw(30) << node_element->address << "|" << std::endl;
+                std::cout << '|'  <<  std::setfill(' ') << std::setw(5) << "index - " <<  std::setfill(' ') << std::setw(5) << node_element->index
+                          << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(20) << node_element->name
+                          << "|" <<  std::setfill(' ') << std::setw(15) << "address - " <<  std::setfill(' ') << std::setw(30) << node_element->address << "|" << std::endl;
 
                 node_element = node_element->next;
             }
@@ -261,7 +267,7 @@ public:
                 std::cin >> user_input;
                 std::cout << "you entered - " << user_input << std::endl;
                 while (node_element != NULL){
-                    string loco_1, loco_2;
+                    std::string loco_1, loco_2;
                     loco_1 = user_input;
                     loco_2 = node_element->name;
                     if (loco_1 == loco_2){
@@ -301,7 +307,7 @@ public:
         }
     }
 
-    string publisher_name;
+    std::string publisher_name;
 
     void add() {
         std::cout << "add..." << std::endl;
@@ -423,6 +429,7 @@ public:
 
             node_element = node_element->next;// двигаемся к следующему элементу
         }
+        just.save();
         std::cout << "Your data is saved!" << std::endl;
         menu();
     }
@@ -440,7 +447,7 @@ public:
         std::ifstream file("E:\\database.txt");
         std::string data_from_file;
         int local_index = 1;
-        string loco; // локальная переменная для изменения данных
+        std::string loco; // локальная переменная для изменения данных
 
         while (getline(file, data_from_file, ' ')) {
             switch (local_index) {
@@ -498,6 +505,7 @@ public:
         }
         file.close();
         std::cout << "load is successfully done!" << std::endl;
+        just.load();
         menu();
     }
 
@@ -545,21 +553,26 @@ public:
     void menu(){
         int loco_counter;
         loco_counter = count();
-        std::cout  << '.'  <<  setfill('_') << setw(50) << '.' << std::endl;
-        std::cout  << '|'  <<  setfill(' ') << setw(50) << '|' << std::endl;
-        std::cout  << '|'  <<  setfill(' ') << setw(35) << "Notations in memory: " <<  setfill(' ') << setw(5) << loco_counter <<  setfill(' ') << setw(10) << '|' << std::endl;
-        std::cout  << '|'  <<  setfill(' ') << setw(50) << '|' << std::endl;
-        std::cout  << '|'  <<  setfill(' ') << setw(35) << "Please choose the action."  <<  setfill(' ') << setw(15) << '|' << std::endl;
-        std::cout  << '|'  <<  setfill(' ') << setw(50) << '|' << std::endl;
-        std::cout << '|'  <<  setfill(' ') << setw(35) << " Show information - 1" <<  setfill(' ') << setw(15) << '|' << std::endl;
-        std::cout << '|'  <<  setfill(' ') << setw(35) << "Add information - 2" <<  setfill(' ') << setw(15) << '|' << std::endl;
-        std::cout << '|'  <<  setfill(' ') << setw(35) << "Delete information - 3" <<  setfill(' ') << setw(15) << '|' << std::endl;
-        std::cout << '|'  <<  setfill(' ') << setw(35) << "Edit information - 4" <<  setfill(' ') << setw(15) << '|' << std::endl;
-        std::cout << '|'  <<  setfill(' ') << setw(35) << "Save information to file - 5" <<  setfill(' ') << setw(15) << '|' << std::endl;
-        std::cout << '|'  <<  setfill(' ') << setw(35) << "Load information from file - 6" <<  setfill(' ') << setw(15) << '|' << std::endl;
-        std::cout << '|'  <<  setfill(' ') << setw(35) << "Exit - 0" <<  setfill(' ') << setw(15) << '|' << std::endl;
-        std::cout  << '|'  <<  setfill(' ') << setw(50) << '|' << std::endl;
-        std::cout  << '|'  <<  setfill('_') << setw(50) << '|' << std::endl;
+        int loco_counter_1;
+        loco_counter_1 = just.counter();
+
+        std::cout  << '.'  <<  std::setfill('_') << std::setw(50) << '.' << std::endl;
+        std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
+        std::cout  << '|'  <<  std::setfill(' ') << std::setw(35) << "Journals in memory: " <<  std::setfill(' ') << std::setw(5) << loco_counter <<  std::setfill(' ') << std::setw(10) << '|' << std::endl;
+        std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
+        std::cout  << '|'  <<  std::setfill(' ') << std::setw(35) << "Publishers in memory: " <<  std::setfill(' ') << std::setw(5) << loco_counter_1 <<  std::setfill(' ') << std::setw(10) << '|' << std::endl;
+        std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
+        std::cout  << '|'  <<  std::setfill(' ') << std::setw(35) << "Please choose the action."  <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << " Show information - 1" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Add information - 2" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Delete information - 3" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Edit information - 4" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Save information to file - 5" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Load information from file - 6" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Exit - 0" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
+        std::cout  << '|'  <<  std::setfill('_') << std::setw(50) << '|' << std::endl;
         std::cout << "Your choise: ";
         std::cin >> user_input;
         std::cout << std::endl;
