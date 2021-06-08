@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <fstream>
 #include <string.h>
-#include <stdlib.h>
+// #include <stdlib.h>
 #include <string>
 #include <sstream>
 
@@ -117,7 +117,7 @@ public:
             int index_loco = 0;
             Publishers *node_element = Head;
 
-            while (node_element != NULL)
+            while (node_element != nullptr)
             {
                 index_loco += 1;
                 node_element = node_element->next;
@@ -129,7 +129,7 @@ public:
         void save(){
             std::cout << "saving..." << std::endl;
             Publishers *node_element = Head;
-            while (node_element != NULL)
+            while (node_element != nullptr)
             {
                 std::string loco = node_element->index;
                 loco += " ";
@@ -138,7 +138,7 @@ public:
                 loco += node_element->address;
                 loco += "\n";
                 std::ofstream out;
-                out.open("E:\\database_publishers.txt", std::ofstream::out | std::ofstream::app);
+                out.open("X:\\database_publishers.txt", std::ofstream::out | std::ofstream::app);
                 out << loco;
                 out.close();
                 node_element = node_element->next;// двигаемся к следующему элементу
@@ -151,7 +151,7 @@ public:
         char second[N];
         char third[N];
         void load(){
-            std::ifstream file("E:\\database_publishers.txt");
+            std::ifstream file("X:\\database_publishers.txt");
             std::string data_from_file;
             int local_index = 1;
             std::string loco; // локальная переменная для изменения данных
@@ -341,9 +341,8 @@ public:
             add_pub_menu();
             strcpy(node->publisher, just.pub_list_name_pub);
 
-            //std::cout << "Enter the name of publisher" << std::endl;
-            //std::cin >> node->publisher;//Записываем значение в структуру
-        } else //Если список пустой
+        }
+        else //Если список пустой
         {
             node->prev = NULL; //Предыдущий элемент указывает в пустоту
             Head = Tail = node; //Голова=Хвост=тот элемент, что сейчас добавили
@@ -368,9 +367,8 @@ public:
 
             add_pub_menu();
             strcpy(node->publisher, just.pub_list_name_pub);
-            //std::cout << "Enter the name of publisher" << std::endl;
-            //std::cin >> node->publisher;//Записываем значение в структуру
         }
+
         std::cout << "choose the option" << std::endl;
         std::cout << "1 - Make one more notation " << std::endl;
         std::cout << "0 - Exit to main menu" << std::endl;
@@ -417,7 +415,7 @@ public:
             loco += " ";
             loco += "\n";
             std::ofstream out;
-            out.open("E:\\database.txt", std::ofstream::out | std::ofstream::app);
+            out.open("X:\\database.txt", std::ofstream::out | std::ofstream::app);
             out << loco;
             out.close();
             node_element = node_element->next;// двигаемся к следующему элементу
@@ -437,7 +435,7 @@ public:
     char seventh[N];
 
     void load() {
-        std::ifstream file("E:\\database.txt");
+        std::ifstream file("X:\\database.txt");
         std::string data_from_file;
         int local_index = 1;
         std::string loco; // локальная переменная для изменения данных
