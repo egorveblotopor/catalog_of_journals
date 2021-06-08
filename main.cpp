@@ -31,7 +31,7 @@
 
 //using namespace std;
 
-const int N = 15;
+const int N = 32;
 int user_input;
 
 struct Magazine{
@@ -42,8 +42,6 @@ struct Magazine{
     int price; // цена
     int discounts; // скидки
     char publisher[N]; // издатель
-
-
     struct Magazine *next; // указатели на некст и прев элементы
     struct Magazine *prev;
 };
@@ -429,7 +427,7 @@ public:
 
             node_element = node_element->next;// двигаемся к следующему элементу
         }
-        just.save();
+        // just.save();
         std::cout << "Your data is saved!" << std::endl;
         menu();
     }
@@ -505,7 +503,7 @@ public:
         }
         file.close();
         std::cout << "load is successfully done!" << std::endl;
-        just.load();
+        //just.load();
         menu();
     }
 
@@ -554,8 +552,7 @@ public:
         int loco_counter;
         loco_counter = count();
         int loco_counter_1;
-        loco_counter_1 = just.counter();
-
+        //loco_counter_1 = just.counter();
         std::cout  << '.'  <<  std::setfill('_') << std::setw(50) << '.' << std::endl;
         std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
         std::cout  << '|'  <<  std::setfill(' ') << std::setw(35) << "Journals in memory: " <<  std::setfill(' ') << std::setw(5) << loco_counter <<  std::setfill(' ') << std::setw(10) << '|' << std::endl;
