@@ -95,10 +95,10 @@ public:
         std::cout << "Type 0 for back to main menu " << std::endl;
         std::cin >> user_input;
 
-        switch (user_input) {
+        switch (user_input)
+        {
             case 1:
                 add();
-
                 break;
             case 0:
                 menu();
@@ -136,12 +136,10 @@ public:
                 loco += " ";
                 loco += node_element->address;
                 loco += "\n";
-
                 std::ofstream out;
                 out.open("E:\\database_publishers.txt", std::ofstream::out | std::ofstream::app);
                 out << loco;
                 out.close();
-
                 node_element = node_element->next;// двигаемся к следующему элементу
             }
             std::cout << "Your data is saved!" << std::endl;
@@ -151,7 +149,6 @@ public:
         std::string first;
         char second[N];
         char third[N];
-
         void load(){
             std::ifstream file("E:\\database_publishers.txt");
             std::string data_from_file;
@@ -165,14 +162,12 @@ public:
                         local_index += 1;
                         break;
                     }
-
                     case 2: //name char
                     {
                         strcpy(second, data_from_file.c_str());
                         local_index += 1;
                         break;
                     }
-
                     case 3: // release num int
                     {
                         strcpy(second, data_from_file.c_str());
@@ -193,11 +188,13 @@ public:
             strcpy(node_element->name, second);
             strcpy(node_element->address, third);
 
-            if (Head != NULL) {
+            if (Head != NULL)
+            {
                 node_element->prev = Tail;
                 Tail->next = node_element;
                 Tail = node_element;
-            } else {
+            } else
+                {
                 node_element->prev = NULL;
                 Head =Tail = node_element;
             }
@@ -223,11 +220,11 @@ public:
             Publishers *node = new Publishers;
             node->next = NULL;
 
-            if (Head != NULL){
+            if (Head != NULL)
+            {
                 node->prev = Tail; //Указываем адрес на предыдущий элемент в соотв. поле
                 Tail->next = node; //Указываем адрес следующего за хвостом элемента
                 Tail = node; //Меняем адрес хвоста
-
 
                 std::cout << "add index" << std::endl;
                 std::cin >> node->index;
@@ -240,7 +237,8 @@ public:
                 std::cin >> node->address;
 
             }
-            else{
+            else
+                {
                 node->prev = NULL; //Предыдущий элемент указывает в пустоту
                 Head = Tail = node; //Голова=Хвост=тот элемент, что сейчас добавили
 
@@ -264,15 +262,18 @@ public:
                 std::cout << "pick the publisher" << std::endl;
                 std::cin >> user_input;
                 std::cout << "you entered - " << user_input << std::endl;
-                while (node_element != NULL){
+                while (node_element != NULL)
+                {
                     std::string loco_1, loco_2;
                     loco_1 = user_input;
                     loco_2 = node_element->name;
-                    if (loco_1 == loco_2){
+                    if (loco_1 == loco_2)
+                    {
                         std::cout << "OK" << std::endl;
                         strcpy(pub_list_name_pub, node_element->name);
                     }
-                    else{
+                    else
+                        {
                         std::cout << "its not work!!!!!" << std::endl;
                     }
                     node_element = node_element->next;
@@ -370,17 +371,13 @@ public:
             //std::cout << "Enter the name of publisher" << std::endl;
             //std::cin >> node->publisher;//Записываем значение в структуру
         }
-
         std::cout << "choose the option" << std::endl;
         std::cout << "1 - Make one more notation " << std::endl;
         std::cout << "0 - Exit to main menu" << std::endl;
-
         std::cin >> user_input;
-
         switch (user_input) {
             case 1:
                 add();
-
                 break;
             case 0:
                 menu();
@@ -419,12 +416,10 @@ public:
             loco += node_element->publisher;
             loco += " ";
             loco += "\n";
-
             std::ofstream out;
             out.open("E:\\database.txt", std::ofstream::out | std::ofstream::app);
             out << loco;
             out.close();
-
             node_element = node_element->next;// двигаемся к следующему элементу
         }
         // just.save();
@@ -446,7 +441,6 @@ public:
         std::string data_from_file;
         int local_index = 1;
         std::string loco; // локальная переменная для изменения данных
-
         while (getline(file, data_from_file, ' ')) {
             switch (local_index) {
                 case 1:
@@ -455,42 +449,36 @@ public:
                     local_index += 1;
                     break;
                 }
-
                 case 2: //name char
                 {
                     strcpy(second, data_from_file.c_str());
                     local_index += 1;
                     break;
                 }
-
                 case 3: // release num int
                 {
                     InformationSystem::third = atoi(data_from_file.c_str());
                     local_index += 1;
                     break;
                 }
-
                 case 4: // release_frequency int
                 {
                     InformationSystem::fourth = atoi(data_from_file.c_str());
                     local_index += 1;
                     break;
                 }
-
                 case 5: // price
                 {
                     InformationSystem::fifth = atoi(data_from_file.c_str());
                     local_index += 1;
                     break;
                 }
-
                 case 6: //discounts
                 {
                     InformationSystem::sixth = atoi(data_from_file.c_str());
                     local_index += 1;
                     break;
                 }
-
                 case 7: // publisher char
                 {
                     strcpy(seventh, data_from_file.c_str());
@@ -498,7 +486,6 @@ public:
                     local_index = 1;
                     break;
                 }
-
             }
         }
         file.close();
@@ -517,7 +504,6 @@ public:
         node_element->price = fifth;
         node_element->discounts = sixth;
         strcpy(node_element->publisher, seventh);
-
         if (Head != NULL) {
             node_element->prev = Tail;
             Tail->next = node_element;
@@ -526,7 +512,6 @@ public:
             node_element->prev = NULL;
             Head =Tail = node_element;
         }
-
     }
 
 
@@ -597,9 +582,7 @@ public:
                 break;
         }
     }
-
 };
-
 
 int main() {
     InformationSystem test;
