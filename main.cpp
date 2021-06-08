@@ -31,7 +31,7 @@
 
 //using namespace std;
 
-const int N = 32;
+const int N = 15;
 int user_input;
 
 struct Magazine{
