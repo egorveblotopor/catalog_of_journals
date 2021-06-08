@@ -106,7 +106,6 @@ public:
         }
     }
 
-
     class Publishers_list{
     public:
         Publishers *Head, *Tail;
@@ -114,8 +113,9 @@ public:
         char pub_list_name_pub[N];
 
         int counter(){
-            Publishers *node_element = Head;
             int index_loco = 0;
+            Publishers *node_element = Head;
+
             while (node_element != NULL)
             {
                 index_loco ++;
@@ -287,7 +287,6 @@ public:
         }
 
     };
-
 
     Publishers_list just;
 
