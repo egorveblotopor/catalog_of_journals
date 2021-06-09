@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <fstream>
 #include <string.h>
-#include <stdlib.h>
+// #include <stdlib.h>
 #include <string>
 #include <sstream>
 
@@ -13,11 +13,10 @@
 - по названию
 - по издательствам
 - по льготам
-
-
 Реализовать поиск по названию.
+*/
 
-
+/*
  Подготовить справочник для подписки на издания.
 Для проведения подписки имеется информация о газетах и журналах (индекс, название, тираж,
 сроки подписки, периодичность выхода, цена, льготы, издательство и т.п.), а также об издающих их издательствах (наименование, адрес и т.п.).
@@ -26,7 +25,6 @@
 - о газетах и журналах, выпускаемых определенным издательством,
 - об определенной газете или журнале,
 - на какие газеты и/или журналы предоставляется льготная подписка.
-
  */
 
 //using namespace std;
@@ -47,6 +45,17 @@ struct Magazine{
     struct Magazine *prev;
 };
 
+
+struct Publishers{
+public:
+    std::string index;
+    char name[N];
+    char address[N];
+    struct Publishers *next;
+    struct Publishers *prev;
+};
+
+
 // инфосистема представленна в виде двусвязкого списка
 // реализовать
 // 1) размещение инфы внутри класса
@@ -58,7 +67,7 @@ public:
     Magazine *Head, *Tail;
 
 // конструктор
-    InformationSystem(): Head(nullptr), Tail(nullptr){};
+    InformationSystem(): Head(NULL), Tail(NULL){};
 
 
 // деструктор
@@ -70,9 +79,10 @@ public:
         }
     }
 
+
     void show(){
         Magazine *node_element = Head;
-        while (node_element != nullptr)
+        while (node_element != NULL)
         {
             std::cout << '|'  <<  std::setfill(' ') << std::setw(5) << "id - " <<  std::setfill(' ') << std::setw(5) << node_element->id
                       << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(20) << node_element->name
@@ -95,6 +105,190 @@ public:
         }
     }
 
+    class Publishers_list{
+    public:
+        Publishers *Head, *Tail;
+
+        char pub_list_name_pub[N];
+
+        int counter(){
+            int index_loco = 0;
+            Publishers *node_element = Head;
+
+            while (node_element != nullptr)
+            {
+                index_loco += 1;
+                node_element = node_element->next;
+            }
+            return index_loco;
+
+        }
+
+        void save(){
+            std::cout << "saving..." << std::endl;
+            Publishers *node_element = Head;
+            while (node_element != nullptr)
+            {
+                std::string loco = node_element->index;
+                loco += " ";
+                loco += node_element->name;
+                loco += " ";
+                loco += node_element->address;
+                loco += "\n";
+                std::ofstream out;
+                out.open("X:\\database_publishers.txt", std::ofstream::out | std::ofstream::app);
+                out << loco;
+                out.close();
+                node_element = node_element->next;// двигаемся к следующему элементу
+            }
+            std::cout << "Your data is saved!" << std::endl;
+        }
+
+        // переменные для переноса из функции считывателя в загрузчик
+        std::string first;
+        char second[N];
+        char third[N];
+        void load(){
+            std::ifstream file("X:\\database_publishers.txt");
+            std::string data_from_file;
+            int local_index = 1;
+            std::string loco; // локальная переменная для изменения данных
+            while (getline(file, data_from_file, ' ')) {
+                switch (local_index) {
+                    case 1:
+                    {
+                        Publishers_list::first = atoi(data_from_file.c_str());
+                        local_index += 1;
+                        break;
+                    }
+                    case 2: //name char
+                    {
+                        strcpy(second, data_from_file.c_str());
+                        local_index += 1;
+                        break;
+                    }
+                    case 3: // release num int
+                    {
+                        strcpy(second, data_from_file.c_str());
+                        adder();
+                        local_index = 1;
+                        break;
+                    }
+                }
+            }
+            file.close();
+            std::cout << "load is successfully done!" << std::endl;
+        }
+
+        void adder(){
+            Publishers *node_element = new Publishers;
+            node_element->next = NULL;
+            node_element->index = first;
+            strcpy(node_element->name, second);
+            strcpy(node_element->address, third);
+
+            if (Head != NULL)
+            {
+                node_element->prev = Tail;
+                Tail->next = node_element;
+                Tail = node_element;
+            } else
+            {
+                node_element->prev = NULL;
+                Head =Tail = node_element;
+            }
+
+        }
+
+        void show(){
+            Publishers *node_element = Head;
+            while (node_element != NULL)
+            {
+                std::cout << '|'  <<  std::setfill(' ') << std::setw(5) << "index - " <<  std::setfill(' ') << std::setw(5) << node_element->index
+                          << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(20) << node_element->name
+                          << "|" <<  std::setfill(' ') << std::setw(15) << "address - " <<  std::setfill(' ') << std::setw(30) << node_element->address << "|" << std::endl;
+
+                node_element = node_element->next;
+            }
+        }
+
+        void add_new(){
+            std::cout << "add..." << std::endl;
+            std::cout << std::endl;
+
+            Publishers *node = new Publishers;
+            node->next = NULL;
+
+            if (Head != NULL)
+            {
+                node->prev = Tail; //Указываем адрес на предыдущий элемент в соотв. поле
+                Tail->next = node; //Указываем адрес следующего за хвостом элемента
+                Tail = node; //Меняем адрес хвоста
+
+                std::cout << "add index" << std::endl;
+                std::cin >> node->index;
+
+                std::cout << "add name" << std::endl;
+                std::cin >> node->name;
+                strcpy(pub_list_name_pub, node->name);
+
+                std::cout << "add address" << std::endl;
+                std::cin >> node->address;
+
+            }
+            else
+            {
+                node->prev = NULL; //Предыдущий элемент указывает в пустоту
+                Head = Tail = node; //Голова=Хвост=тот элемент, что сейчас добавили
+
+                std::cout << "add index" << std::endl;
+                std::cin >> node->index;
+
+                std::cout << "add name" << std::endl;
+                std::cin >> node->name;
+                strcpy(pub_list_name_pub, node->name);
+
+                std::cout << "add address" << std::endl;
+                std::cin >> node->address;
+            }
+
+        }
+
+        void get_from_list(){
+            Publishers *node_element = Head;
+            if (Head != NULL){
+                show();
+                std::cout << "pick the publisher" << std::endl;
+                std::cin >> user_input;
+                std::cout << "you entered - " << user_input << std::endl;
+                while (node_element != NULL)
+                {
+                    std::string loco_1, loco_2;
+                    loco_1 = user_input;
+                    loco_2 = node_element->name;
+                    if (loco_1 == loco_2)
+                    {
+                        std::cout << "OK" << std::endl;
+                        strcpy(pub_list_name_pub, node_element->name);
+                    }
+                    else
+                    {
+                        std::cout << "its not work!!!!!" << std::endl;
+                    }
+                    node_element = node_element->next;
+                }
+
+            }
+            else{
+                std::cout << "Publishers list is empty, please add new" << std::endl;
+                add_new();
+            }
+        }
+
+    };
+
+    Publishers_list just;
+
     void add_pub_menu(){
         std::cout << "choose the option" << std::endl;
         std::cout << "1 - Add new publisher with keyboard " << std::endl;
@@ -110,13 +304,15 @@ public:
         }
     }
 
+    std::string publisher_name;
+
     void add() {
         std::cout << "add..." << std::endl;
         std::cout << std::endl;
         Magazine *node = new Magazine; //Выделение памяти под новый элемент структуры
-        node->next = nullptr; //Указываем, что изначально по следующему адресу пусто
+        node->next = NULL; //Указываем, что изначально по следующему адресу пусто
 
-        if (Head != nullptr) //Если список не пуст
+        if (Head != NULL) //Если список не пуст
         {
             node->prev = Tail; //Указываем адрес на предыдущий элемент в соотв. поле
             Tail->next = node; //Указываем адрес следующего за хвостом элемента
@@ -146,7 +342,7 @@ public:
         }
         else //Если список пустой
         {
-            node->prev = nullptr; //Предыдущий элемент указывает в пустоту
+            node->prev = NULL; //Предыдущий элемент указывает в пустоту
             Head = Tail = node; //Голова=Хвост=тот элемент, что сейчас добавили
 
             std::cout << "add index" << std::endl;
@@ -187,7 +383,7 @@ public:
 
 
     void delete_function(){
-        std::cout << "delete something" << std::endl;
+        std::cout << "dele somth" << std::endl;
     }
 
 
@@ -199,7 +395,7 @@ public:
     void save(){
         std::cout << "saving..." << std::endl;
         Magazine *node_element = Head;
-        while (node_element != nullptr)
+        while (node_element != NULL)
         {
             std::string loco = std::to_string(node_element->id);
             loco += " ";
@@ -296,7 +492,7 @@ public:
 
     void adder(){
         Magazine *node_element = new Magazine;
-        node_element->next = nullptr;
+        node_element->next = NULL;
         node_element->id = first;
         strcpy(node_element->name, second);
         node_element->release_number = third;
@@ -304,12 +500,12 @@ public:
         node_element->price = fifth;
         node_element->discounts = sixth;
         strcpy(node_element->publisher, seventh);
-        if (Head != nullptr) {
+        if (Head != NULL) {
             node_element->prev = Tail;
             Tail->next = node_element;
             Tail = node_element;
         } else {
-            node_element->prev = nullptr;
+            node_element->prev = NULL;
             Head =Tail = node_element;
         }
     }
@@ -324,7 +520,7 @@ public:
         // данная функция подсчитывает кол-во эл-тов в списке
         int counter = 0;
         Magazine *node = Head;
-        while (node != nullptr)
+        while (node != NULL)
         {
             counter ++;
             node = node->next;
@@ -355,7 +551,7 @@ public:
         std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Exit - 0" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
         std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
         std::cout  << '|'  <<  std::setfill('_') << std::setw(50) << '|' << std::endl;
-        std::cout << "Your choice: ";
+        std::cout << "Your choise: ";
         std::cin >> user_input;
         std::cout << std::endl;
         switch (user_input) {
@@ -382,196 +578,6 @@ public:
                 break;
         }
     }
-
-    struct Publishers{
-    public:
-        std::string index;
-        char name[N];
-        char address[N];
-        struct Publishers *next;
-        struct Publishers *prev;
-    };
-
-    class Publishers_list{
-    public:
-        Publishers *Head, *Tail;
-
-        char pub_list_name_pub[N];
-
-        int counter(){
-            int index_loco = 0;
-            Publishers *node_element = Head;
-
-            while (node_element != nullptr)
-            {
-                index_loco += 1;
-                node_element = node_element->next;
-            }
-            return index_loco;
-
-        }
-
-        void save(){
-            std::cout << "saving..." << std::endl;
-            Publishers *node_element = Head;
-            while (node_element != nullptr)
-            {
-                std::string loco = node_element->index;
-                loco += " ";
-                loco += node_element->name;
-                loco += " ";
-                loco += node_element->address;
-                loco += "\n";
-                std::ofstream out;
-                out.open("X:\\database_publishers.txt", std::ofstream::out | std::ofstream::app);
-                out << loco;
-                out.close();
-                node_element = node_element->next;// двигаемся к следующему элементу
-            }
-            std::cout << "Your data is saved!" << std::endl;
-        }
-
-        // переменные для переноса из функции считывателя в загрузчик
-        std::string first;
-        char second[N];
-        char third[N];
-        void load(){
-            std::ifstream file("X:\\database_publishers.txt");
-            std::string data_from_file;
-            int local_index = 1;
-            std::string loco; // локальная переменная для изменения данных
-            while (getline(file, data_from_file, ' ')) {
-                switch (local_index) {
-                    case 1:
-                    {
-                        Publishers_list::first = atoi(data_from_file.c_str());
-                        local_index += 1;
-                        break;
-                    }
-                    case 2: //name char
-                    {
-                        strcpy(second, data_from_file.c_str());
-                        local_index += 1;
-                        break;
-                    }
-                    case 3: // release num int
-                    {
-                        strcpy(second, data_from_file.c_str());
-                        adder();
-                        local_index = 1;
-                        break;
-                    }
-                }
-            }
-            file.close();
-            std::cout << "load is successfully done!" << std::endl;
-        }
-
-        void adder(){
-            Publishers *node_element = new Publishers;
-            node_element->next = nullptr;
-            node_element->index = first;
-            strcpy(node_element->name, second);
-            strcpy(node_element->address, third);
-
-            if (Head != nullptr)
-            {
-                node_element->prev = Tail;
-                Tail->next = node_element;
-                Tail = node_element;
-            } else
-            {
-                node_element->prev = nullptr;
-                Head =Tail = node_element;
-            }
-
-        }
-
-        void show(){
-            Publishers *node_element = Head;
-            while (node_element != nullptr)
-            {
-                std::cout << '|'  <<  std::setfill(' ') << std::setw(5) << "index - " <<  std::setfill(' ') << std::setw(5) << node_element->index
-                          << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(20) << node_element->name
-                          << "|" <<  std::setfill(' ') << std::setw(15) << "address - " <<  std::setfill(' ') << std::setw(30) << node_element->address << "|" << std::endl;
-
-                node_element = node_element->next;
-            }
-        }
-
-        void add_new(){
-            std::cout << "add..." << std::endl;
-            std::cout << std::endl;
-
-            Publishers *node = new Publishers;
-            node->next = nullptr;
-
-            if (Head != nullptr)
-            {
-                node->prev = Tail; //Указываем адрес на предыдущий элемент в соотв. поле
-                Tail->next = node; //Указываем адрес следующего за хвостом элемента
-                Tail = node; //Меняем адрес хвоста
-
-                std::cout << "add index" << std::endl;
-                std::cin >> node->index;
-
-                std::cout << "add name" << std::endl;
-                std::cin >> node->name;
-                strcpy(pub_list_name_pub, node->name);
-
-                std::cout << "add address" << std::endl;
-                std::cin >> node->address;
-
-            }
-            else
-            {
-                node->prev = nullptr; //Предыдущий элемент указывает в пустоту
-                Head = Tail = node; //Голова=Хвост=тот элемент, что сейчас добавили
-
-                std::cout << "add index" << std::endl;
-                std::cin >> node->index;
-
-                std::cout << "add name" << std::endl;
-                std::cin >> node->name;
-                strcpy(pub_list_name_pub, node->name);
-
-                std::cout << "add address" << std::endl;
-                std::cin >> node->address;
-            }
-        }
-
-        void get_from_list(){
-            Publishers *node_element = Head;
-            if (Head != nullptr){
-                show();
-                std::cout << "pick the publisher" << std::endl;
-                std::cin >> user_input;
-                std::cout << "you entered - " << user_input << std::endl;
-                while (node_element != nullptr)
-                {
-                    std::string loco_1, loco_2;
-                    loco_1 = user_input;
-                    loco_2 = node_element->name;
-                    if (loco_1 == loco_2)
-                    {
-                        std::cout << "OK" << std::endl;
-                        strcpy(pub_list_name_pub, node_element->name);
-                    }
-                    else
-                    {
-                        std::cout << "its not work!!!!!" << std::endl;
-                    }
-                    node_element = node_element->next;
-                }
-            }
-            else{
-                std::cout << "Publishers list is empty, please add new" << std::endl;
-                add_new();
-            }
-        }
-
-    };
-    Publishers_list just;
 };
 
 int main() {
