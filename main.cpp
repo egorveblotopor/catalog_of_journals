@@ -68,7 +68,7 @@ public:
     Magazine *Head, *Tail;
 
 // конструктор
-    InformationSystem(): Head(NULL), Tail(NULL){};
+    InformationSystem(): Head(nullptr), Tail(nullptr){};
 
 
 // деструктор
@@ -83,7 +83,7 @@ public:
 
     void show(){
         Magazine *node_element = Head;
-        while (node_element != NULL)
+        while (node_element != nullptr)
         {
             std::cout << '|'  <<  std::setfill(' ') << std::setw(5) << "id - " <<  std::setfill(' ') << std::setw(5) << node_element->id
                       << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(20) << node_element->name
@@ -111,7 +111,18 @@ public:
     class Publishers_list{
     public:
         Publishers *Head, *Tail;
+// конструктор
+        Publishers_list(): Head(nullptr), Tail(nullptr){};
 
+
+// деструктор
+        ~Publishers_list(){
+            while (Head) {
+                Tail = Head->next;
+                delete Head;
+                Head = Tail;
+            }
+        }
         char pub_list_name_pub[N];
 
         int counter(){
@@ -139,7 +150,7 @@ public:
                 loco += node_element->address;
                 loco += '\n';
                 std::ofstream out;
-                out.open("X:\\database_publishers.txt", std::ofstream::out | std::ofstream::app);
+                out.open("E:\\database_publishers.txt", std::ofstream::out | std::ofstream::app);
                 out << loco;
                 out.close();
                 node_element = node_element->next;// двигаемся к следующему элементу
@@ -148,12 +159,12 @@ public:
         }
 
         // переменные для переноса из функции считывателя в загрузчик
-        std::string first;
-        char second[N];
-        char third[N];
+        char first_pub[N];
+        char second_pub[N];
+        char third_pub[N];
 
         void load(){
-            std::ifstream file("X:\\database_publishers.txt");
+            std::ifstream file("E:\\database_publishers.txt");
             std::string data_from_file;
             int local_index = 1;
             std::string loco; // локальная переменная для изменения данных
@@ -161,19 +172,22 @@ public:
                 switch (local_index) {
                     case 1:
                     {
-                        Publishers_list::first = atoi(data_from_file.c_str());
+                        //std::cout << data_from_file << std::endl;
+                        strcpy(first_pub, data_from_file.c_str());
                         local_index += 1;
                         break;
                     }
                     case 2: //name char
                     {
-                        strcpy(second, data_from_file.c_str());
+                        //std::cout << data_from_file << std::endl;
+                        strcpy(second_pub, data_from_file.c_str());
                         local_index += 1;
                         break;
                     }
                     case 3: // release num int
                     {
-                        strcpy(third, data_from_file.c_str());
+                        //std::cout << data_from_file << std::endl;
+                        strcpy(third_pub, data_from_file.c_str());
                         adder();
                         local_index = 1;
                         break;
@@ -186,24 +200,24 @@ public:
 
         void adder(){
             Publishers *node_element = new Publishers;
-            node_element->next = NULL;
-            node_element->index = first;
-            strcpy(node_element->name, second);
-            strcpy(node_element->address, third);
+            node_element->next = nullptr;
+            node_element->index = first_pub;
+            strcpy(node_element->name, second_pub);
+            strcpy(node_element->address, third_pub);
 
-            if (Head != NULL) {
+            if (Head != nullptr) {
                 node_element->prev = Tail;
                 Tail->next = node_element;
                 Tail = node_element;
             } else {
-                node_element->prev = NULL;
+                node_element->prev = nullptr;
                 Head =Tail = node_element;
             }
         }
 
         void show(){
             Publishers *node_element = Head;
-            while (node_element != NULL)
+            while (node_element != nullptr)
             {
                 std::cout << '|'  <<  std::setfill(' ') << std::setw(5) << "index - " <<  std::setfill(' ') << std::setw(5) << node_element->index
                           << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(20) << node_element->name
@@ -218,9 +232,9 @@ public:
             std::cout << std::endl;
 
             Publishers *node = new Publishers;
-            node->next = NULL;
+            node->next = nullptr;
 
-            if (Head != NULL)
+            if (Head != nullptr)
             {
                 node->prev = Tail; //Указываем адрес на предыдущий элемент в соотв. поле
                 Tail->next = node; //Указываем адрес следующего за хвостом элемента
@@ -239,7 +253,7 @@ public:
             }
             else
             {
-                node->prev = NULL; //Предыдущий элемент указывает в пустоту
+                node->prev = nullptr; //Предыдущий элемент указывает в пустоту
                 Head = Tail = node; //Голова=Хвост=тот элемент, что сейчас добавили
 
                 std::cout << "add index" << std::endl;
@@ -257,7 +271,7 @@ public:
 
         void get_from_list(){
             Publishers *node_element = Head;
-            if (Head != NULL){
+            if (Head != nullptr){
                 show();
                 std::cout << "pick the publisher" << std::endl;
                 std::cin >> user_input;
@@ -305,7 +319,6 @@ public:
         }
     }
 
-    std::string publisher_name;
 
     void add() {
         std::cout << "add..." << std::endl;
@@ -414,7 +427,7 @@ public:
             loco += " ";
             loco += "\n";
             std::ofstream out;
-            out.open("X:\\database.txt", std::ofstream::out | std::ofstream::app);
+            out.open("E:\\database.txt", std::ofstream::out | std::ofstream::app);
             out << loco;
             out.close();
             node_element = node_element->next;// двигаемся к следующему элементу
@@ -434,7 +447,7 @@ public:
     char seventh[N];
 
     void load() {
-        std::ifstream file("X:\\database.txt");
+        std::ifstream file("E:\\database.txt");
         std::string data_from_file;
         int local_index = 1;
         std::string loco; // локальная переменная для изменения данных
@@ -521,10 +534,12 @@ public:
         // данная функция подсчитывает кол-во эл-тов в списке
         int counter = 0;
         Magazine *node = Head;
-        while (node != NULL)
-        {
+        if (Head !=NULL){
+            while (node != NULL)
+            {
             counter ++;
             node = node->next;
+            }
         }
         return counter;
     }
@@ -535,6 +550,7 @@ public:
         loco_counter = count();
         int loco_counter_1;
         loco_counter_1 = just.counter();
+
         std::cout  << '.'  <<  std::setfill('_') << std::setw(50) << '.' << std::endl;
         std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
         std::cout  << '|'  <<  std::setfill(' ') << std::setw(35) << "Journals in memory: " <<  std::setfill(' ') << std::setw(5) << loco_counter <<  std::setfill(' ') << std::setw(10) << '|' << std::endl;
