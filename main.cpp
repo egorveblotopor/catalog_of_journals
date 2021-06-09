@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <fstream>
 #include <string.h>
-// #include <stdlib.h>
+#include <stdlib.h>
 #include <string>
 #include <sstream>
 
@@ -51,6 +51,7 @@ public:
     std::string index;
     char name[N];
     char address[N];
+
     struct Publishers *next;
     struct Publishers *prev;
 };
@@ -90,6 +91,8 @@ public:
 
             node_element = node_element->next;
         }
+
+        just.show();
 
         std::cout << "Type 0 for back to main menu " << std::endl;
         std::cin >> user_input;
@@ -134,7 +137,7 @@ public:
                 loco += node_element->name;
                 loco += " ";
                 loco += node_element->address;
-                loco += "\n";
+                loco += '\n';
                 std::ofstream out;
                 out.open("X:\\database_publishers.txt", std::ofstream::out | std::ofstream::app);
                 out << loco;
@@ -148,6 +151,7 @@ public:
         std::string first;
         char second[N];
         char third[N];
+
         void load(){
             std::ifstream file("X:\\database_publishers.txt");
             std::string data_from_file;
@@ -169,7 +173,7 @@ public:
                     }
                     case 3: // release num int
                     {
-                        strcpy(second, data_from_file.c_str());
+                        strcpy(third, data_from_file.c_str());
                         adder();
                         local_index = 1;
                         break;
@@ -187,17 +191,14 @@ public:
             strcpy(node_element->name, second);
             strcpy(node_element->address, third);
 
-            if (Head != NULL)
-            {
+            if (Head != NULL) {
                 node_element->prev = Tail;
                 Tail->next = node_element;
                 Tail = node_element;
-            } else
-            {
+            } else {
                 node_element->prev = NULL;
                 Head =Tail = node_element;
             }
-
         }
 
         void show(){
