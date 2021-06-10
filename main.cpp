@@ -48,7 +48,7 @@ struct Magazine{
 
 struct Publishers{
 public:
-    std::string index;
+    char index[N];
     char name[N];
     char address[N];
 
@@ -172,21 +172,18 @@ public:
                 switch (local_index) {
                     case 1:
                     {
-                        //std::cout << data_from_file << std::endl;
                         strcpy(first_pub, data_from_file.c_str());
                         local_index += 1;
                         break;
                     }
                     case 2: //name char
                     {
-                        //std::cout << data_from_file << std::endl;
                         strcpy(second_pub, data_from_file.c_str());
                         local_index += 1;
                         break;
                     }
                     case 3: // release num int
                     {
-                        //std::cout << data_from_file << std::endl;
                         strcpy(third_pub, data_from_file.c_str());
                         adder();
                         local_index = 1;
@@ -201,7 +198,7 @@ public:
         void adder(){
             Publishers *node_element = new Publishers;
             node_element->next = nullptr;
-            node_element->index = first_pub;
+            strcpy(node_element->index, first_pub);
             strcpy(node_element->name, second_pub);
             strcpy(node_element->address, third_pub);
 
@@ -276,7 +273,7 @@ public:
                 std::cout << "pick the publisher" << std::endl;
                 std::cin >> user_input;
                 std::cout << "you entered - " << user_input << std::endl;
-                while (node_element != NULL)
+                while (node_element != nullptr)
                 {
                     std::string loco_1, loco_2;
                     loco_1 = user_input;
@@ -324,9 +321,9 @@ public:
         std::cout << "add..." << std::endl;
         std::cout << std::endl;
         Magazine *node = new Magazine; //Выделение памяти под новый элемент структуры
-        node->next = NULL; //Указываем, что изначально по следующему адресу пусто
+        node->next = nullptr; //Указываем, что изначально по следующему адресу пусто
 
-        if (Head != NULL) //Если список не пуст
+        if (Head != nullptr) //Если список не пуст
         {
             node->prev = Tail; //Указываем адрес на предыдущий элемент в соотв. поле
             Tail->next = node; //Указываем адрес следующего за хвостом элемента
@@ -356,7 +353,7 @@ public:
         }
         else //Если список пустой
         {
-            node->prev = NULL; //Предыдущий элемент указывает в пустоту
+            node->prev = nullptr; //Предыдущий элемент указывает в пустоту
             Head = Tail = node; //Голова=Хвост=тот элемент, что сейчас добавили
 
             std::cout << "add index" << std::endl;
@@ -397,7 +394,7 @@ public:
 
 
     void delete_function(){
-        std::cout << "dele somth" << std::endl;
+        std::cout << "delete element" << std::endl;
     }
 
 
@@ -409,7 +406,7 @@ public:
     void save(){
         std::cout << "saving..." << std::endl;
         Magazine *node_element = Head;
-        while (node_element != NULL)
+        while (node_element != nullptr)
         {
             std::string loco = std::to_string(node_element->id);
             loco += " ";
@@ -506,7 +503,7 @@ public:
 
     void adder(){
         Magazine *node_element = new Magazine;
-        node_element->next = NULL;
+        node_element->next = nullptr;
         node_element->id = first;
         strcpy(node_element->name, second);
         node_element->release_number = third;
@@ -514,28 +511,43 @@ public:
         node_element->price = fifth;
         node_element->discounts = sixth;
         strcpy(node_element->publisher, seventh);
-        if (Head != NULL) {
+        if (Head != nullptr) {
             node_element->prev = Tail;
             Tail->next = node_element;
             Tail = node_element;
         } else {
-            node_element->prev = NULL;
+            node_element->prev = nullptr;
             Head =Tail = node_element;
         }
     }
 
 
     void exit(){
-        // реализовать функцию выход(1. сохр 2. десструкт 3. ??? 4. Profit!)
-        std::cout << "exit" << std::endl;
+        std::cout << "Do you want save data before exit???" << std::endl;
+        std::cout << "1 - save & exit" << std::endl;
+        std::cout << "2 - exit without saving" << std::endl;
+        std::cin >> user_input;
+        switch (user_input) {
+            case 1:{
+                std::cout << "saving..." << std::endl;
+                save();
+                std::cout << "end of program" << std::endl;
+                break;
+            }
+            case 2:{
+                std::cout << "end of program without saving" << std::endl;
+                break;
+            }
+        }
+
     }
 
     int count(){
         // данная функция подсчитывает кол-во эл-тов в списке
         int counter = 0;
         Magazine *node = Head;
-        if (Head !=NULL){
-            while (node != NULL)
+        if (Head !=nullptr){
+            while (node != nullptr)
             {
             counter ++;
             node = node->next;
