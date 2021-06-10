@@ -32,6 +32,7 @@
 const int N = 8;// играл с размером чаров... проиграл
 int user_input;
 
+
 struct Magazine{
     int id; //индекс
     char name[N]; //название
@@ -51,7 +52,6 @@ public:
     char index[N];
     char name[N];
     char address[N];
-
     struct Publishers *next;
     struct Publishers *prev;
 };
@@ -63,13 +63,13 @@ public:
 // 2) запись на диск и чтение инфы с диска в память
 // 3) алгоритмы сортировок и поиска
 
+
 class InformationSystem{
 public:
     Magazine *Head, *Tail;
 
 // конструктор
     InformationSystem(): Head(nullptr), Tail(nullptr){};
-
 
 // деструктор
     ~InformationSystem(){
@@ -80,8 +80,7 @@ public:
         }
     }
 
-
-    void show(){
+    void show_main(){
         Magazine *node_element = Head;
         while (node_element != nullptr)
         {
@@ -93,10 +92,8 @@ public:
         }
 
         just.show();
-
         std::cout << "Type 0 for back to main menu " << std::endl;
         std::cin >> user_input;
-
         switch (user_input)
         {
             case 1:
@@ -108,14 +105,14 @@ public:
         }
     }
 
+
     class Publishers_list{
     public:
         Publishers *Head, *Tail;
-// конструктор
+        // конструктор
         Publishers_list(): Head(nullptr), Tail(nullptr){};
 
-
-// деструктор
+        // деструктор
         ~Publishers_list(){
             while (Head) {
                 Tail = Head->next;
@@ -123,19 +120,18 @@ public:
                 Head = Tail;
             }
         }
+
         char pub_list_name_pub[N];
 
         int counter(){
             int index_loco = 0;
             Publishers *node_element = Head;
-
             while (node_element != nullptr)
             {
                 index_loco += 1;
                 node_element = node_element->next;
             }
             return index_loco;
-
         }
 
         void save(){
@@ -246,7 +242,6 @@ public:
 
                 std::cout << "add address" << std::endl;
                 std::cin >> node->address;
-
             }
             else
             {
@@ -263,7 +258,6 @@ public:
                 std::cout << "add address" << std::endl;
                 std::cin >> node->address;
             }
-
         }
 
         void get_from_list(){
@@ -289,15 +283,14 @@ public:
                     }
                     node_element = node_element->next;
                 }
-
             }
             else{
                 std::cout << "Publishers list is empty, please add new" << std::endl;
                 add_new();
             }
         }
-
     };
+
 
     Publishers_list just;
 
@@ -315,7 +308,6 @@ public:
                 break;
         }
     }
-
 
     void add() {
         std::cout << "add..." << std::endl;
@@ -392,16 +384,13 @@ public:
         }
     }
 
-
     void delete_function(){
         std::cout << "delete element" << std::endl;
     }
 
-
     void edit(){
         std::cout << "edit" << std::endl;
     }
-
 
     void save(){
         std::cout << "saving..." << std::endl;
@@ -521,7 +510,6 @@ public:
         }
     }
 
-
     void exit(){
         std::cout << "Do you want save data before exit???" << std::endl;
         std::cout << "1 - save & exit" << std::endl;
@@ -539,7 +527,6 @@ public:
                 break;
             }
         }
-
     }
 
     int count(){
@@ -555,7 +542,6 @@ public:
         }
         return counter;
     }
-
 
     void menu(){
         int loco_counter;
@@ -584,27 +570,34 @@ public:
         std::cin >> user_input;
         std::cout << std::endl;
         switch (user_input) {
-            case 1:
-                show();
+            case 1:{
+                show_main();
                 break;
-            case 2:
+            }
+            case 2:{
                 add();
                 break;
-            case 3:
+            }
+            case 3:{
                 delete_function();
                 break;
-            case 4:
+            }
+            case 4:{
                 edit();
                 break;
-            case 5:
+            }
+            case 5:{
                 save();
                 break;
-            case 6:
+            }
+            case 6:{
                 load();
                 break;
-            case 0:
+            }
+            case 0: {
                 exit();
                 break;
+            }
         }
     }
 };
