@@ -29,6 +29,8 @@
 
 //using namespace std;
 
+
+int commit;
 const int N = 8;// играл с размером чаров... проиграл
 int user_input;
 
