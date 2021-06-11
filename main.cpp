@@ -1,8 +1,8 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <string.h>
-#include <stdlib.h>
+#include <cstring>
+#include <cstdlib>
 #include <string>
 #include <sstream>
 
@@ -276,7 +276,7 @@ public:
                 std::cout << "pick the publisher" << std::endl;
                 std::cin >> user_input;
                 std::cout << "you entered - " << user_input << std::endl;
-                while (node_element != NULL)
+                while (node_element != nullptr)
                 {
                     std::string loco_1, loco_2;
                     loco_1 = user_input;
@@ -324,9 +324,9 @@ public:
         std::cout << "add..." << std::endl;
         std::cout << std::endl;
         Magazine *node = new Magazine; //Выделение памяти под новый элемент структуры
-        node->next = NULL; //Указываем, что изначально по следующему адресу пусто
+        node->next = nullptr; //Указываем, что изначально по следующему адресу пусто
 
-        if (Head != NULL) //Если список не пуст
+        if (Head != nullptr) //Если список не пуст
         {
             node->prev = Tail; //Указываем адрес на предыдущий элемент в соотв. поле
             Tail->next = node; //Указываем адрес следующего за хвостом элемента
@@ -356,7 +356,7 @@ public:
         }
         else //Если список пустой
         {
-            node->prev = NULL; //Предыдущий элемент указывает в пустоту
+            node->prev = nullptr; //Предыдущий элемент указывает в пустоту
             Head = Tail = node; //Голова=Хвост=тот элемент, что сейчас добавили
 
             std::cout << "add index" << std::endl;
@@ -397,19 +397,21 @@ public:
 
 
     void delete_function(){
-        std::cout << "dele somth" << std::endl;
+        std::cout << "delete" << std::endl;
     }
 
 
     void edit(){
         std::cout << "edit" << std::endl;
+        //std::cin >> user_input;
+        //std::cout << "what are you wanna, honey?" << std::endl;
     }
 
 
     void save(){
         std::cout << "saving..." << std::endl;
         Magazine *node_element = Head;
-        while (node_element != NULL)
+        while (node_element != nullptr)
         {
             std::string loco = std::to_string(node_element->id);
             loco += " ";
@@ -506,7 +508,7 @@ public:
 
     void adder(){
         Magazine *node_element = new Magazine;
-        node_element->next = NULL;
+        node_element->next = nullptr;
         node_element->id = first;
         strcpy(node_element->name, second);
         node_element->release_number = third;
@@ -514,12 +516,12 @@ public:
         node_element->price = fifth;
         node_element->discounts = sixth;
         strcpy(node_element->publisher, seventh);
-        if (Head != NULL) {
+        if (Head != nullptr) {
             node_element->prev = Tail;
             Tail->next = node_element;
             Tail = node_element;
         } else {
-            node_element->prev = NULL;
+            node_element->prev = nullptr;
             Head =Tail = node_element;
         }
     }
@@ -534,8 +536,8 @@ public:
         // данная функция подсчитывает кол-во эл-тов в списке
         int counter = 0;
         Magazine *node = Head;
-        if (Head !=NULL){
-            while (node != NULL)
+        if (Head !=nullptr){
+            while (node != nullptr)
             {
             counter ++;
             node = node->next;
@@ -568,7 +570,7 @@ public:
         std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Exit - 0" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
         std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
         std::cout  << '|'  <<  std::setfill('_') << std::setw(50) << '|' << std::endl;
-        std::cout << "Your choise: ";
+        std::cout << "Your choice: ";
         std::cin >> user_input;
         std::cout << std::endl;
         switch (user_input) {
