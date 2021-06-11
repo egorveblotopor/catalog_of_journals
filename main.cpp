@@ -1,8 +1,8 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <cstring>
-#include <cstdlib>
+#include <string.h>
+#include <stdlib.h>
 #include <string>
 #include <sstream>
 
@@ -32,6 +32,7 @@
 const int N = 8;// играл с размером чаров... проиграл
 int user_input;
 
+
 struct Magazine{
     int id; //индекс
     char name[N]; //название
@@ -48,10 +49,9 @@ struct Magazine{
 
 struct Publishers{
 public:
-    std::string index;
+    char index[N];
     char name[N];
     char address[N];
-
     struct Publishers *next;
     struct Publishers *prev;
 };
@@ -63,13 +63,13 @@ public:
 // 2) запись на диск и чтение инфы с диска в память
 // 3) алгоритмы сортировок и поиска
 
+
 class InformationSystem{
 public:
     Magazine *Head, *Tail;
 
 // конструктор
     InformationSystem(): Head(nullptr), Tail(nullptr){};
-
 
 // деструктор
     ~InformationSystem(){
@@ -80,8 +80,7 @@ public:
         }
     }
 
-
-    void show(){
+    void show_main(){
         Magazine *node_element = Head;
         while (node_element != nullptr)
         {
@@ -93,10 +92,8 @@ public:
         }
 
         just.show();
-
         std::cout << "Type 0 for back to main menu " << std::endl;
         std::cin >> user_input;
-
         switch (user_input)
         {
             case 1:
@@ -108,14 +105,14 @@ public:
         }
     }
 
+
     class Publishers_list{
     public:
         Publishers *Head, *Tail;
-// конструктор
+        // конструктор
         Publishers_list(): Head(nullptr), Tail(nullptr){};
 
-
-// деструктор
+        // деструктор
         ~Publishers_list(){
             while (Head) {
                 Tail = Head->next;
@@ -123,19 +120,18 @@ public:
                 Head = Tail;
             }
         }
+
         char pub_list_name_pub[N];
 
         int counter(){
             int index_loco = 0;
             Publishers *node_element = Head;
-
             while (node_element != nullptr)
             {
                 index_loco += 1;
                 node_element = node_element->next;
             }
             return index_loco;
-
         }
 
         void save(){
@@ -172,21 +168,18 @@ public:
                 switch (local_index) {
                     case 1:
                     {
-                        //std::cout << data_from_file << std::endl;
                         strcpy(first_pub, data_from_file.c_str());
                         local_index += 1;
                         break;
                     }
                     case 2: //name char
                     {
-                        //std::cout << data_from_file << std::endl;
                         strcpy(second_pub, data_from_file.c_str());
                         local_index += 1;
                         break;
                     }
                     case 3: // release num int
                     {
-                        //std::cout << data_from_file << std::endl;
                         strcpy(third_pub, data_from_file.c_str());
                         adder();
                         local_index = 1;
@@ -201,7 +194,7 @@ public:
         void adder(){
             Publishers *node_element = new Publishers;
             node_element->next = nullptr;
-            node_element->index = first_pub;
+            strcpy(node_element->index, first_pub);
             strcpy(node_element->name, second_pub);
             strcpy(node_element->address, third_pub);
 
@@ -249,7 +242,6 @@ public:
 
                 std::cout << "add address" << std::endl;
                 std::cin >> node->address;
-
             }
             else
             {
@@ -266,7 +258,6 @@ public:
                 std::cout << "add address" << std::endl;
                 std::cin >> node->address;
             }
-
         }
 
         void get_from_list(){
@@ -292,15 +283,14 @@ public:
                     }
                     node_element = node_element->next;
                 }
-
             }
             else{
                 std::cout << "Publishers list is empty, please add new" << std::endl;
                 add_new();
             }
         }
-
     };
+
 
     Publishers_list just;
 
@@ -318,7 +308,6 @@ public:
                 break;
         }
     }
-
 
     void add() {
         std::cout << "add..." << std::endl;
@@ -395,18 +384,13 @@ public:
         }
     }
 
-
     void delete_function(){
-        std::cout << "delete" << std::endl;
+        std::cout << "delete element" << std::endl;
     }
-
 
     void edit(){
         std::cout << "edit" << std::endl;
-        //std::cin >> user_input;
-        //std::cout << "what are you wanna, honey?" << std::endl;
     }
-
 
     void save(){
         std::cout << "saving..." << std::endl;
@@ -526,10 +510,23 @@ public:
         }
     }
 
-
     void exit(){
-        // реализовать функцию выход(1. сохр 2. десструкт 3. ??? 4. Profit!)
-        std::cout << "exit" << std::endl;
+        std::cout << "Do you want save data before exit???" << std::endl;
+        std::cout << "1 - save & exit" << std::endl;
+        std::cout << "2 - exit without saving" << std::endl;
+        std::cin >> user_input;
+        switch (user_input) {
+            case 1:{
+                std::cout << "saving..." << std::endl;
+                save();
+                std::cout << "end of program" << std::endl;
+                break;
+            }
+            case 2:{
+                std::cout << "end of program without saving" << std::endl;
+                break;
+            }
+        }
     }
 
     int count(){
@@ -545,7 +542,6 @@ public:
         }
         return counter;
     }
-
 
     void menu(){
         int loco_counter;
@@ -570,31 +566,38 @@ public:
         std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Exit - 0" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
         std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
         std::cout  << '|'  <<  std::setfill('_') << std::setw(50) << '|' << std::endl;
-        std::cout << "Your choice: ";
+        std::cout << "Your choise: ";
         std::cin >> user_input;
         std::cout << std::endl;
         switch (user_input) {
-            case 1:
-                show();
+            case 1:{
+                show_main();
                 break;
-            case 2:
+            }
+            case 2:{
                 add();
                 break;
-            case 3:
+            }
+            case 3:{
                 delete_function();
                 break;
-            case 4:
+            }
+            case 4:{
                 edit();
                 break;
-            case 5:
+            }
+            case 5:{
                 save();
                 break;
-            case 6:
+            }
+            case 6:{
                 load();
                 break;
-            case 0:
+            }
+            case 0: {
                 exit();
                 break;
+            }
         }
     }
 };
