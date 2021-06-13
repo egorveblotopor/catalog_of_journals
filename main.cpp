@@ -84,12 +84,23 @@ public:
 
     void show_main(){
         Magazine *node_element = Head;
+
+        std::cout << std::endl;
+        std::cout << std::endl;
+        std::cout << "List of magazines" << std::endl;
+
         while (node_element != nullptr)
         {
-            std::cout << '|'  <<  std::setfill(' ') << std::setw(5) << "id - " <<  std::setfill(' ') << std::setw(5) << node_element->id
-                      << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(20) << node_element->name
-                      << "|" <<  std::setfill(' ') << std::setw(15) << "price - " <<  std::setfill(' ') << std::setw(30) << node_element->price << "|" << std::endl;
 
+            std::cout << std::endl;
+            std::cout << '|'  <<  std::setfill(' ') << std::setw(5) << "id - " <<  std::setfill(' ') << std::setw(5) << node_element->id
+                      << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(10) << node_element->name
+                      << "|" <<  std::setfill(' ') << std::setw(15) << "release num - " <<  std::setfill(' ') << std::setw(15) << node_element->release_number << "|" << std::endl
+                      << "|" <<  std::setfill(' ') << std::setw(20) << "release frequency - " <<  std::setfill(' ') << std::setw(15) << node_element->release_frequency << "|" << std::endl
+                      << "|" <<  std::setfill(' ') << std::setw(20) << "price - " <<  std::setfill(' ') << std::setw(15) << node_element->price << "|" << std::endl
+                      << "|" <<  std::setfill(' ') << std::setw(20) << "discounts - " <<  std::setfill(' ') << std::setw(15) << node_element->discounts << "|" << std::endl
+                      << "|" <<  std::setfill(' ') << std::setw(20) << "publisher - " <<  std::setfill(' ') << std::setw(15) << node_element->publisher << "|" << std::endl;
+            std::cout << std::endl;
             node_element = node_element->next;
         }
 
@@ -146,6 +157,7 @@ public:
                 loco += node_element->name;
                 loco += " ";
                 loco += node_element->address;
+                loco += " ";
                 loco += '\n';
                 std::ofstream out;
                 out.open("E:\\database_publishers.txt", std::ofstream::out | std::ofstream::app);
@@ -166,11 +178,18 @@ public:
             std::string data_from_file;
             int local_index = 1;
             std::string loco; // локальная переменная для изменения данных
+            int change_index = -1;
             while (getline(file, data_from_file, ' ')) {
                 switch (local_index) {
                     case 1:
                     {
-                        strcpy(first_pub, data_from_file.c_str());
+                        loco = data_from_file;
+                        change_index = loco.find('\n');
+
+                        if (change_index != -1){
+                            loco = loco.erase(change_index, loco.length()-1);
+                        }
+                        strcpy(first_pub, loco.c_str());
                         local_index += 1;
                         break;
                     }
@@ -182,6 +201,7 @@ public:
                     }
                     case 3: // release num int
                     {
+                        std::cout << data_from_file.length() << "|" << data_from_file << std::endl;
                         strcpy(third_pub, data_from_file.c_str());
                         adder();
                         local_index = 1;
@@ -212,12 +232,16 @@ public:
 
         void show(){
             Publishers *node_element = Head;
+            std::cout << std::endl;
+            std::cout << std::endl;
+            std::cout << "List of publishers" << std::endl;
             while (node_element != nullptr)
             {
-                std::cout << '|'  <<  std::setfill(' ') << std::setw(5) << "index - " <<  std::setfill(' ') << std::setw(5) << node_element->index
-                          << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(20) << node_element->name
-                          << "|" <<  std::setfill(' ') << std::setw(15) << "address - " <<  std::setfill(' ') << std::setw(30) << node_element->address << "|" << std::endl;
-
+                std::cout << std::endl;
+                std::cout << '|'  <<  std::setfill(' ') << std::setw(10) << "index - " <<  std::setfill(' ') << std::setw(10) << node_element->index
+                          << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(10) << node_element->name
+                          << "|" <<  std::setfill(' ') << std::setw(10) << "address - " <<  std::setfill(' ') << std::setw(20) << node_element->address << "|" << std::endl;
+                std::cout << std::endl;
                 node_element = node_element->next;
             }
         }
@@ -439,6 +463,7 @@ public:
         std::string data_from_file;
         int local_index = 1;
         std::string loco; // локальная переменная для изменения данных
+        int change_index = -1;
         while (getline(file, data_from_file, ' ')) {
             switch (local_index) {
                 case 1:
@@ -449,8 +474,14 @@ public:
                 }
                 case 2: //name char
                 {
-                    strcpy(second, data_from_file.c_str());
+                    loco = data_from_file;
+                    change_index = loco.find('\n');
+                    if (change_index != -1){
+                        loco = loco.erase(change_index, loco.length()-1);
+                    }
+                    strcpy(second, loco.c_str());
                     local_index += 1;
+                    change_index = -1;
                     break;
                 }
                 case 3: // release num int
@@ -568,7 +599,7 @@ public:
         std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Exit - 0" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
         std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
         std::cout  << '|'  <<  std::setfill('_') << std::setw(50) << '|' << std::endl;
-        std::cout << "Your choise: ";
+        std::cout << "Your choice: ";
         std::cin >> user_input;
         std::cout << std::endl;
         switch (user_input) {
