@@ -30,7 +30,6 @@
 //using namespace std;
 
 
-int commit;
 const int N = 8;// играл с размером чаров... проиграл
 int user_input;
 
@@ -59,16 +58,20 @@ public:
 };
 
 
-// инфосистема представленна в виде двусвязкого списка
-// реализовать
-// 1) размещение инфы внутри класса
-// 2) запись на диск и чтение инфы с диска в память
-// 3) алгоритмы сортировок и поиска
+struct StreamlineNode{
+public:
+    int id;
+    char name[N]; //название
+    int parameter_int; // сюда заносим параметр для сортировкис
+    struct StreamlineNode *next;
+    struct StreamlineNode *prev;
+};
 
 
 class InformationSystem{
 public:
     Magazine *Head, *Tail;
+    StreamlineNode *Head_0, Tail_0;
 
 // конструктор
     InformationSystem(): Head(nullptr), Tail(nullptr){};
@@ -329,7 +332,7 @@ public:
             case 1:
                 just.add_new();
                 break;
-            case 2:
+            case 0:
                 just.get_from_list();
                 break;
         }
@@ -409,6 +412,12 @@ public:
                 break;
         }
     }
+
+
+    void add_menu(){
+
+    }
+
 
     void delete_function(){
         std::cout << "delete element" << std::endl;
@@ -592,10 +601,11 @@ public:
         std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
         std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << " Show information - 1" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
         std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Add information - 2" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
-        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Delete information - 3" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
-        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Edit information - 4" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        //std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Delete information - 3" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        //std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Edit information - 4" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
         std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Save information to file - 5" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
         std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Load information from file - 6" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Search information - 7" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
         std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Exit - 0" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
         std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
         std::cout  << '|'  <<  std::setfill('_') << std::setw(50) << '|' << std::endl;
@@ -627,12 +637,161 @@ public:
                 load();
                 break;
             }
+            case 7:{
+                search_menu();
+                break;
+            }
             case 0: {
                 exit();
                 break;
             }
         }
     }
+
+
+    void search_menu(){
+        /*
+        - упорядоченных по цене, тиражу, названию газет и/или журналов,
+        - о газетах и журналах, выпускаемых определенным издательством,
+        - об определенной газете или журнале,
+        - на какие газеты и/или журналы предоставляется льготная подписка.
+        */
+        std::cout << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << " streamline journals by data - 1" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << " Show journals of publisher - 2" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << " Show journal - 3" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << " Show discounts - 4" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << " Exit to main menu - 0" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << std::endl;
+        std::cout << "Your choice: ";
+        std::cin >> user_input;
+        std::cout << std::endl;
+        switch (user_input) {
+            case 1: {
+                streamline_journals_menu();
+                break;
+            }
+            case 2: {
+                journals_of_publisher();
+                break;
+            }
+            case 3: {
+                show_journal();
+                break;
+            }
+            case 4: {
+                show_discounts();
+                break;
+            }
+            case 0: {
+                menu();
+                break;
+            }
+        }
+    }
+
+    void streamline_journals_menu(){
+        std::cout << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << " sort by price - 1" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << " sort by release number - 2" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << " sort by name - 3" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << " Exit to search menu - 0" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << std::endl;
+        std::cout << "Your choice: ";
+        std::cin >> user_input;
+        std::cout << std::endl;
+        switch (user_input) {
+            case 1: {
+                streamline_price();
+                break;
+            }
+            case 2: {
+                streamline_release();
+                break;
+            }
+            case 3: {
+                streamline_name();
+                break;
+            }
+            case 0:{
+                search_menu();
+                break;
+            }
+        }
+    }
+
+    void sort_show_price(){
+        Magazine * temp = Head;                     //Направляем указатель на начало списка
+        while (temp){                           //Обходим список, то же что и while (temp != NULL)
+            //std::cout << temp->id << '|' << temp->name << '|' << temp->price << '|' << temp->discounts << '|' << temp->publisher << '|' << temp->release_number << '|' << temp->release_frequency << std::endl;            //Выводим нужные элементы из текущего звена
+            std::cout << temp->id << '|' << temp->name << '|' << temp->price << std::endl;
+            temp = temp->next;                  //Направляем указатель на следующий элемент списка
+        }
+    }
+
+    void streamline_price() {
+        Magazine *left = Head;                 //Первый элемент — это пусть будет голова
+        Magazine *right = Head->next;          //Второй элемент — это пусть будет следующий за головой элемент
+
+        Magazine *temp = new Magazine;              //Временное звено для хранения переставляемого всех значений переставляемого звена
+
+        while (left->next) {                 //Обходим по всем звеньям, за исключением крайнего правого
+            while (right) {              //Обходим по всем звеньям, включая крайний правый (по всем относительно первого левого на текущий момент)
+                if ((left->price) < (right->price)) {        //Проверяем необходимость перестановки
+
+                    temp->price = left->price;              //И переставляем все внутренние элементы, за исключением указателей связи, местами
+                    temp->id = left->id;
+                    strcpy(temp->publisher, left->publisher);
+                    strcpy(temp->name, left->name);
+                    temp->discounts = left->discounts;
+                    temp->release_number = left->release_number;
+                    temp->release_frequency = left->release_frequency;
+
+                    left->price = right->price;             //Сейчас у нас имеется только x, поэтому только его
+                    left->id = right->id;
+                    strcpy(left->publisher, right->publisher);
+                    strcpy(left->name, right->name);
+                    left->discounts = right->discounts;
+                    left->release_number = right->release_number;
+                    left->release_frequency = right->release_frequency;
+
+                    right->price = temp->price;             //иначе бы  нужно было это проделывать для каждого несвязующего элемента
+                    right->id = temp->id;
+                    strcpy(right->publisher, temp->publisher);
+                    strcpy(right->name, temp->name);
+                    right->discounts = temp->discounts;
+                    right->release_number = temp->release_number;
+                    right->release_frequency = temp->release_frequency;
+
+                }
+                right = right->next;                    //не забываем направлять указатель на следующий элемент (по подобию инкремента), иначе цикл зависнет
+            }
+            left = left->next;                              //не забываем направлять указатель на следующий элемент (по подобию инкремента), иначе цикл зависнет
+            right = left->next;                             //Поскольку второй указатель убежал немного вперёд, обязательно возвращаем его назад, это следующий элемент относительно текущего первого
+        }
+
+        sort_show_price();
+    }
+
+    void streamline_release(){
+
+    }
+
+    void streamline_name(){
+
+    }
+
+    void journals_of_publisher(){
+
+    }
+    void show_journal(){
+
+    }
+    void show_discounts(){
+
+    }
+
+
 };
 
 int main() {
