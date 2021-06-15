@@ -31,8 +31,8 @@
 
 
 const int N = 8;// играл с размером чаров... проиграл
-int user_input;
-
+int user_input_int;
+char user_input_char[N];
 
 struct Magazine{
     int id; //индекс
@@ -107,18 +107,6 @@ public:
             node_element = node_element->next;
         }
 
-        just.show();
-        std::cout << "Type 0 for back to main menu " << std::endl;
-        std::cin >> user_input;
-        switch (user_input)
-        {
-            case 1:
-                add();
-                break;
-            case 0:
-                menu();
-                break;
-        }
     }
 
 
@@ -204,7 +192,7 @@ public:
                     }
                     case 3: // release num int
                     {
-                        std::cout << data_from_file.length() << "|" << data_from_file << std::endl;
+                        //std::cout << data_from_file.length() << "|" << data_from_file << std::endl;
                         strcpy(third_pub, data_from_file.c_str());
                         adder();
                         local_index = 1;
@@ -294,14 +282,17 @@ public:
             if (Head != nullptr){
                 show();
                 std::cout << "pick the publisher" << std::endl;
-                std::cin >> user_input;
-                std::cout << "you entered - " << user_input << std::endl;
+                std::cin >> user_input_char;
+                std::cout << "you entered - " << user_input_int << std::endl;
                 while (node_element != nullptr)
                 {
-                    std::string loco_1, loco_2;
-                    loco_1 = user_input;
-                    loco_2 = node_element->name;
-                    if (loco_1 == loco_2)
+
+                    char loco_1[N], loco_2[N];
+                    strcpy(loco_1, user_input_char);
+                    strcpy(loco_2, node_element->name);
+                    int result;
+                    result = strcmp(loco_1, loco_2);
+                    if (result == 0)
                     {
                         std::cout << "OK" << std::endl;
                         strcpy(pub_list_name_pub, node_element->name);
@@ -327,8 +318,8 @@ public:
         std::cout << "choose the option" << std::endl;
         std::cout << "1 - Add new publisher with keyboard " << std::endl;
         std::cout << "0 - Get it from list" << std::endl;
-        std::cin >> user_input;
-        switch (user_input) {
+        std::cin >> user_input_int;
+        switch (user_input_int) {
             case 1:
                 just.add_new();
                 break;
@@ -402,8 +393,8 @@ public:
         std::cout << "choose the option" << std::endl;
         std::cout << "1 - Make one more notation " << std::endl;
         std::cout << "0 - Exit to main menu" << std::endl;
-        std::cin >> user_input;
-        switch (user_input) {
+        std::cin >> user_input_int;
+        switch (user_input_int) {
             case 1:
                 add();
                 break;
@@ -556,8 +547,8 @@ public:
         std::cout << "Do you want save data before exit???" << std::endl;
         std::cout << "1 - save & exit" << std::endl;
         std::cout << "2 - exit without saving" << std::endl;
-        std::cin >> user_input;
-        switch (user_input) {
+        std::cin >> user_input_int;
+        switch (user_input_int) {
             case 1:{
                 std::cout << "saving..." << std::endl;
                 save();
@@ -610,11 +601,25 @@ public:
         std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
         std::cout  << '|'  <<  std::setfill('_') << std::setw(50) << '|' << std::endl;
         std::cout << "Your choice: ";
-        std::cin >> user_input;
+        std::cin >> user_input_int;
         std::cout << std::endl;
-        switch (user_input) {
+        switch (user_input_int) {
             case 1:{
                 show_main();
+                just.show();
+
+                std::cout << "Type 0 for back to main menu " << std::endl;
+                std::cin >> user_input_int;
+                switch (user_input_int)
+                {
+                    case 1:
+                        add();
+                        break;
+                    case 0:
+                        menu();
+                        break;
+                }
+
                 break;
             }
             case 2:{
@@ -664,9 +669,9 @@ public:
         std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << " Exit to main menu - 0" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
         std::cout << std::endl;
         std::cout << "Your choice: ";
-        std::cin >> user_input;
+        std::cin >> user_input_int;
         std::cout << std::endl;
-        switch (user_input) {
+        switch (user_input_int) {
             case 1: {
                 streamline_journals_menu();
                 break;
@@ -698,9 +703,9 @@ public:
         std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << " Exit to search menu - 0" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
         std::cout << std::endl;
         std::cout << "Your choice: ";
-        std::cin >> user_input;
+        std::cin >> user_input_int;
         std::cout << std::endl;
-        switch (user_input) {
+        switch (user_input_int) {
             case 1: {
                 streamline_price();
                 break;
@@ -720,11 +725,27 @@ public:
         }
     }
 
-    void sort_show_price(){
+    void sort_show(){
         Magazine * temp = Head;                     //Направляем указатель на начало списка
-        while (temp){                           //Обходим список, то же что и while (temp != NULL)
-            //std::cout << temp->id << '|' << temp->name << '|' << temp->price << '|' << temp->discounts << '|' << temp->publisher << '|' << temp->release_number << '|' << temp->release_frequency << std::endl;            //Выводим нужные элементы из текущего звена
-            std::cout << temp->id << '|' << temp->name << '|' << temp->price << std::endl;
+        while (temp) {                           //Обходим список, то же что и while (temp != NULL)
+
+            std::cout << std::endl;
+            std::cout << '|' << std::setfill(' ') << std::setw(5) << "id - " << std::setfill(' ') << std::setw(5)
+                      << temp->id
+                      << "|" << std::setfill(' ') << std::setw(7) << "name - " << std::setfill(' ') << std::setw(10)
+                      << temp->name
+                      << "|" << std::setfill(' ') << std::setw(15) << "release num - " << std::setfill(' ')
+                      << std::setw(15) << temp->release_number << "|" << std::endl
+                      << "|" << std::setfill(' ') << std::setw(20) << "release frequency - " << std::setfill(' ')
+                      << std::setw(15) << temp->release_frequency << "|" << std::endl
+                      << "|" << std::setfill(' ') << std::setw(20) << "price - " << std::setfill(' ') << std::setw(15)
+                      << temp->price << "|" << std::endl
+                      << "|" << std::setfill(' ') << std::setw(20) << "discounts - " << std::setfill(' ')
+                      << std::setw(15) << temp->discounts << "|" << std::endl
+                      << "|" << std::setfill(' ') << std::setw(20) << "publisher - " << std::setfill(' ')
+                      << std::setw(15) << temp->publisher << "|" << std::endl;
+            std::cout << std::endl;
+
             temp = temp->next;                  //Направляем указатель на следующий элемент списка
         }
     }
@@ -770,16 +791,107 @@ public:
             right = left->next;                             //Поскольку второй указатель убежал немного вперёд, обязательно возвращаем его назад, это следующий элемент относительно текущего первого
         }
 
-        sort_show_price();
+        sort_show();
+        streamline_journals_menu();
     }
 
     void streamline_release(){
+        Magazine *left = Head;                 //Первый элемент — это пусть будет голова
+        Magazine *right = Head->next;          //Второй элемент — это пусть будет следующий за головой элемент
 
+        Magazine *temp = new Magazine;              //Временное звено для хранения переставляемого всех значений переставляемого звена
+
+        while (left->next) {                 //Обходим по всем звеньям, за исключением крайнего правого
+            while (right) {              //Обходим по всем звеньям, включая крайний правый (по всем относительно первого левого на текущий момент)
+                if ((left->release_number) < (right->release_number)) {        //Проверяем необходимость перестановки
+
+                    temp->price = left->price;              //И переставляем все внутренние элементы, за исключением указателей связи, местами
+                    temp->id = left->id;
+                    strcpy(temp->publisher, left->publisher);
+                    strcpy(temp->name, left->name);
+                    temp->discounts = left->discounts;
+                    temp->release_number = left->release_number;
+                    temp->release_frequency = left->release_frequency;
+
+                    left->price = right->price;             //Сейчас у нас имеется только x, поэтому только его
+                    left->id = right->id;
+                    strcpy(left->publisher, right->publisher);
+                    strcpy(left->name, right->name);
+                    left->discounts = right->discounts;
+                    left->release_number = right->release_number;
+                    left->release_frequency = right->release_frequency;
+
+                    right->price = temp->price;             //иначе бы  нужно было это проделывать для каждого несвязующего элемента
+                    right->id = temp->id;
+                    strcpy(right->publisher, temp->publisher);
+                    strcpy(right->name, temp->name);
+                    right->discounts = temp->discounts;
+                    right->release_number = temp->release_number;
+                    right->release_frequency = temp->release_frequency;
+
+                }
+                right = right->next;                    //не забываем направлять указатель на следующий элемент (по подобию инкремента), иначе цикл зависнет
+            }
+            left = left->next;                              //не забываем направлять указатель на следующий элемент (по подобию инкремента), иначе цикл зависнет
+            right = left->next;                             //Поскольку второй указатель убежал немного вперёд, обязательно возвращаем его назад, это следующий элемент относительно текущего первого
+        }
+
+        sort_show();
+        streamline_journals_menu();
     }
 
     void streamline_name(){
+        Magazine *left = Head;                 //Первый элемент — это пусть будет голова
+        Magazine *right = Head->next;          //Второй элемент — это пусть будет следующий за головой элемент
 
+        Magazine *temp = new Magazine;              //Временное звено для хранения переставляемого всех значений переставляемого звена
+        char loco_1[N];
+        char loco_2[N];
+        int result;
+
+        strcpy(loco_1, left->name);
+        strcpy(loco_1, right->name);
+        result = strcmp(loco_1, loco_2);
+
+        while (left->next) {                 //Обходим по всем звеньям, за исключением крайнего правого
+            while (right) {              //Обходим по всем звеньям, включая крайний правый (по всем относительно первого левого на текущий момент)
+                if (result>0) {        //Проверяем необходимость перестановки
+
+                    temp->price = left->price;              //И переставляем все внутренние элементы, за исключением указателей связи, местами
+                    temp->id = left->id;
+                    strcpy(temp->publisher, left->publisher);
+                    strcpy(temp->name, left->name);
+                    temp->discounts = left->discounts;
+                    temp->release_number = left->release_number;
+                    temp->release_frequency = left->release_frequency;
+
+                    left->price = right->price;             //Сейчас у нас имеется только x, поэтому только его
+                    left->id = right->id;
+                    strcpy(left->publisher, right->publisher);
+                    strcpy(left->name, right->name);
+                    left->discounts = right->discounts;
+                    left->release_number = right->release_number;
+                    left->release_frequency = right->release_frequency;
+
+                    right->price = temp->price;             //иначе бы  нужно было это проделывать для каждого несвязующего элемента
+                    right->id = temp->id;
+                    strcpy(right->publisher, temp->publisher);
+                    strcpy(right->name, temp->name);
+                    right->discounts = temp->discounts;
+                    right->release_number = temp->release_number;
+                    right->release_frequency = temp->release_frequency;
+
+                }
+                right = right->next;                    //не забываем направлять указатель на следующий элемент (по подобию инкремента), иначе цикл зависнет
+            }
+            left = left->next;                              //не забываем направлять указатель на следующий элемент (по подобию инкремента), иначе цикл зависнет
+            right = left->next;                             //Поскольку второй указатель убежал немного вперёд, обязательно возвращаем его назад, это следующий элемент относительно текущего первого
+        }
+
+        sort_show();
+        streamline_journals_menu();
     }
+
 
     void journals_of_publisher(){
 
