@@ -344,7 +344,36 @@ public:
             }
         }
 
+        char publisher_ch
+        void pick_show(){
+
+        }
+
         void publisher_action(){
+
+            pick_show();
+            std::cout << "choose journal that you want edit or remove" << std::endl;
+            std::cout << "input id of journal" << std::endl;
+            std::cin >> magazine_choice;
+            Magazine *node_element = Head;
+            while (node_element != nullptr){
+                if (magazine_choice == node_element->id){
+                    std::cout << "if you want remove this notation - 1" << std::endl;
+                    std::cout << "if you want edit this notation - 2" << std::endl;
+                    std::cin >> magazine_remove_or_edit;
+                    switch (magazine_remove_or_edit) {
+                        case 1:{
+                            magazine_remove();
+                            break;
+                        }
+                        case 2:{
+                            magazine_edit();
+                            break;
+                        }
+                    }
+                }
+                node_element = node_element->next;
+            }
 
         }
 
@@ -485,7 +514,7 @@ public:
             node_element = node_element->next;
         }
         std::cout << "remove is succesfully finished" << std::endl;
-
+        menu();
     }
 
     void magazine_edit(){
