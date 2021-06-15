@@ -151,7 +151,7 @@ public:
                 loco += " ";
                 loco += '\n';
                 std::ofstream out;
-                out.open("E:\\database_publishers.txt", std::ofstream::out | std::ofstream::app);
+                out.open("X:\\database_publishers.txt", std::ofstream::out | std::ofstream::app);
                 out << loco;
                 out.close();
                 node_element = node_element->next;// двигаемся к следующему элементу
@@ -165,7 +165,7 @@ public:
         char third_pub[N];
 
         void load(){
-            std::ifstream file("E:\\database_publishers.txt");
+            std::ifstream file("X:\\database_publishers.txt");
             std::string data_from_file;
             int local_index = 1;
             std::string loco; // локальная переменная для изменения данных
@@ -219,6 +219,19 @@ public:
                 node_element->prev = nullptr;
                 Head =Tail = node_element;
             }
+        }
+
+        void pick_show(){
+            Publishers *node_element = Head;
+            while (node_element != nullptr)
+            {
+                std::cout << std::endl;
+                std::cout << '|'  <<  std::setfill(' ') << std::setw(10) << "index - " <<  std::setfill(' ') << std::setw(10) << node_element->index
+                          << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(10) << node_element->name << std::endl;
+                std::cout << std::endl;
+                node_element = node_element->next;
+            }
+
         }
 
         void show(){
@@ -309,6 +322,28 @@ public:
                 add_new();
             }
         }
+
+        void journals_of_publisher(){
+            pick_show();
+            std::cout << "input name of publisher - " << std::endl;
+            std::cin >> user_input_char;
+
+            Publishers *node_element = Head;
+            while (node_element != nullptr){
+                int result = strcmp(user_input_char, node_element->name);
+                if (result == 0){
+                    std::cout << std::endl;
+                    std::cout << '|'  <<  std::setfill(' ') << std::setw(10) << "index - " <<  std::setfill(' ') << std::setw(10) << node_element->index
+                              << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(10) << node_element->name
+                              << "|" <<  std::setfill(' ') << std::setw(10) << "address - " <<  std::setfill(' ') << std::setw(20) << node_element->address << "|" << std::endl;
+                    std::cout << std::endl;
+
+                }
+
+                node_element = node_element->next;
+            }
+        }
+
     };
 
 
@@ -410,8 +445,8 @@ public:
     }
 
 
-    void delete_function(){
-        std::cout << "delete element" << std::endl;
+    void delete_or_edit(){
+        std::cout << "choose what you want edit or remove" << std::endl;
     }
 
     void edit(){
@@ -439,7 +474,7 @@ public:
             loco += " ";
             loco += "\n";
             std::ofstream out;
-            out.open("E:\\database.txt", std::ofstream::out | std::ofstream::app);
+            out.open("X:\\database.txt", std::ofstream::out | std::ofstream::app);
             out << loco;
             out.close();
             node_element = node_element->next;// двигаемся к следующему элементу
@@ -459,7 +494,7 @@ public:
     char seventh[N];
 
     void load() {
-        std::ifstream file("E:\\database.txt");
+        std::ifstream file("X:\\database.txt");
         std::string data_from_file;
         int local_index = 1;
         std::string loco; // локальная переменная для изменения данных
@@ -592,7 +627,7 @@ public:
         std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
         std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << " Show information - 1" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
         std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Add information - 2" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
-        //std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Delete information - 3" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Delete or edit - 3" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
         //std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Edit information - 4" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
         std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Save information to file - 5" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
         std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Load information from file - 6" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
@@ -619,7 +654,6 @@ public:
                         menu();
                         break;
                 }
-
                 break;
             }
             case 2:{
@@ -627,7 +661,7 @@ public:
                 break;
             }
             case 3:{
-                delete_function();
+                delete_or_edit();
                 break;
             }
             case 4:{
@@ -677,7 +711,7 @@ public:
                 break;
             }
             case 2: {
-                journals_of_publisher();
+                just.journals_of_publisher();
                 break;
             }
             case 3: {
@@ -723,6 +757,21 @@ public:
                 break;
             }
         }
+    }
+
+    void pick_show(){
+        Magazine *node_element = Head;
+        while (node_element != nullptr)
+        {
+            std::cout << std::endl;
+            std::cout << '|'  <<  std::setfill(' ') << std::setw(10) << "index - " <<  std::setfill(' ') << std::setw(10) << node_element->id
+                      << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(10) << node_element->name
+                      << std::endl;
+            std::cout << std::endl;
+            node_element = node_element->next;
+        }
+
+
     }
 
     void sort_show(){
@@ -893,14 +942,55 @@ public:
     }
 
 
-    void journals_of_publisher(){
 
-    }
     void show_journal(){
+        pick_show();
+        std::cout << "input name of publisher - " << std::endl;
+        std::cin >> user_input_char;
 
+        Magazine *node_element = Head;
+        while (node_element != nullptr){
+            int result = strcmp(user_input_char, node_element->name);
+            if (result == 0){
+                std::cout << std::endl;
+                std::cout << '|'  <<  std::setfill(' ') << std::setw(5) << "id - " <<  std::setfill(' ') << std::setw(5) << node_element->id
+                          << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(10) << node_element->name
+                          << "|" <<  std::setfill(' ') << std::setw(15) << "release num - " <<  std::setfill(' ') << std::setw(15) << node_element->release_number << "|" << std::endl
+                          << "|" <<  std::setfill(' ') << std::setw(20) << "release frequency - " <<  std::setfill(' ') << std::setw(15) << node_element->release_frequency << "|" << std::endl
+                          << "|" <<  std::setfill(' ') << std::setw(20) << "price - " <<  std::setfill(' ') << std::setw(15) << node_element->price << "|" << std::endl
+                          << "|" <<  std::setfill(' ') << std::setw(20) << "discounts - " <<  std::setfill(' ') << std::setw(15) << node_element->discounts << "|" << std::endl
+                          << "|" <<  std::setfill(' ') << std::setw(20) << "publisher - " <<  std::setfill(' ') << std::setw(15) << node_element->publisher << "|" << std::endl;
+                std::cout << std::endl;
+
+            }
+            else{
+                std::cout << std::endl;
+                std::cout << "Try again. I'm not understand you!" << std::endl;
+                std::cout << std::endl;
+                show_journal();
+            }
+
+            node_element = node_element->next;
+        }
+        search_menu();
     }
-    void show_discounts(){
 
+
+    void show_discounts(){
+        Magazine *node_element = Head;
+        while (node_element != nullptr){
+            if (node_element->discounts != 0){
+                std::cout << std::endl;
+                std::cout << '|'  <<  std::setfill(' ') << std::setw(10) << "index - " <<  std::setfill(' ') << std::setw(10) << node_element->id
+                          << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(10) << node_element->name
+                          << "|" <<  std::setfill(' ') << std::setw(7) << "accessible discount - " <<  std::setfill(' ') << std::setw(10) << node_element->discounts
+                          << std::endl;
+                std::cout << std::endl;
+
+            }
+            node_element = node_element->next;
+        }
+        search_menu();
     }
 
 
