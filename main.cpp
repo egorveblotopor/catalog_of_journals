@@ -344,6 +344,10 @@ public:
             }
         }
 
+        void publisher_action(){
+
+        }
+
     };
 
 
@@ -440,13 +444,141 @@ public:
     }
 
 
-    void add_menu(){
+    int magazine_choice;
+    int magazine_remove_or_edit; // сюда записываем айди журнала для для действий с ним
+    int magazine_choice_field;
+
+    void magazine_action(){
+        pick_show();
+        std::cout << "choose journal that you want edit or remove" << std::endl;
+        std::cout << "input id of journal" << std::endl;
+        std::cin >> magazine_choice;
+        Magazine *node_element = Head;
+        while (node_element != nullptr){
+            if (magazine_choice == node_element->id){
+                std::cout << "if you want remove this notation - 1" << std::endl;
+                std::cout << "if you want edit this notation - 2" << std::endl;
+                std::cin >> magazine_remove_or_edit;
+                switch (magazine_remove_or_edit) {
+                    case 1:{
+                        magazine_remove();
+                        break;
+                    }
+                    case 2:{
+                        magazine_edit();
+                        break;
+                    }
+                }
+            }
+            node_element = node_element->next;
+        }
+    }
+
+    void magazine_remove(){
+        Magazine *node_element = Head;
+        while (node_element->id != magazine_choice){
+            if (node_element->id == magazine_choice){
+                node_element->prev->next = node_element->next;
+                node_element->next->prev = node_element->prev;
+                break;
+            }
+            node_element = node_element->next;
+        }
+        std::cout << "remove is succesfully finished" << std::endl;
 
     }
 
+    void magazine_edit(){
+        Magazine *node_element = Head;
+        while (node_element->id != magazine_choice){
+            if (node_element->id == magazine_choice) {
+                std::cout << "pick the field for edit" << std::endl;
+                std::cout << std::endl;
+                std::cout << '|' << std::setfill(' ') << std::setw(10) << "index - " << std::setfill(' ')
+                          << std::setw(10) << node_element->id << '|' << std::setfill(' ') << std::setw(10) << "1"
+                          << '|' << std::endl;
+                std::cout << "|" << std::setfill(' ') << std::setw(10) << "name - " << std::setfill(' ')
+                          << std::setw(10) << node_element->name << '|' << std::setfill(' ') << std::setw(10) << "2"
+                          << '|' << std::endl;
+                std::cout << "|" << std::setfill(' ') << std::setw(10) << "price - " << std::setfill(' ')
+                          << std::setw(10) << node_element->price << '|' << std::setfill(' ') << std::setw(10) << "3"
+                          << '|' << std::endl;
+                std::cout << "|" << std::setfill(' ') << std::setw(10) << "release frequency - " << std::setfill(' ')
+                          << std::setw(10) << node_element->release_frequency << '|' << std::setfill(' ')
+                          << std::setw(10) << "4" << '|' << std::endl;
+                std::cout << "|" << std::setfill(' ') << std::setw(10) << "release number- " << std::setfill(' ')
+                          << std::setw(10) << node_element->release_number << '|' << std::setfill(' ') << std::setw(10)
+                          << "5" << '|' << std::endl;
+                std::cout << "|" << std::setfill(' ') << std::setw(10) << "discounts - " << std::setfill(' ')
+                          << std::setw(10) << node_element->discounts << '|' << std::setfill(' ') << std::setw(10)
+                          << "6" << '|' << std::endl;
+                std::cout << "|" << std::setfill(' ') << std::setw(10) << "publisher - " << std::setfill(' ')
+                          << std::setw(10) << node_element->publisher << '|' << std::setfill(' ') << std::setw(10)
+                          << "7" << '|' << std::endl;
+                std::cout << std::endl;
 
-    void delete_or_edit(){
+                std::cout << "pick the field for edit" << std::endl;
+                std::cin >> magazine_choice_field;
+                switch (magazine_choice_field) {
+                    case 1:{
+                        std::cout << "input new value for filed id (int)" << std::endl;
+                        std::cin >> node_element->id;
+                        break;
+                    }
+                    case 2:{
+                        std::cout << "input new value for filed name (char)" << std::endl;
+                        std::cin >> node_element->id;
+                        break;
+                    }
+                    case 3:{
+                        std::cout << "input new value for filed price (int)" << std::endl;
+                        std::cin >> node_element->price;
+                        break;
+                    }
+                    case 4:{
+                        std::cout << "input new value for filed release frequency (int)" << std::endl;
+                        std::cin >> node_element->release_frequency;
+                        break;
+                    }
+                    case 5:{
+                        std::cout << "input new value for filed release number (int)" << std::endl;
+                        std::cin >> node_element->release_number;
+                        break;
+                    }
+                    case 6:{
+                        std::cout << "input new value for filed discounts (int)" << std::endl;
+                        std::cin >> node_element->discounts;
+                        break;
+                    }
+                    case 7:{
+                        std::cout << "input new value for filed publisher (char)" << std::endl;
+                        std::cin >> node_element->publisher;
+                        break;
+                    }
+                }
+                break;
+            }
+            node_element = node_element->next;
+        }
+        std::cout << "edit is successfully finished" << std::endl;
+        menu();
+    }
+
+    void delete_or_edit_menu(){
         std::cout << "choose what you want edit or remove" << std::endl;
+        std::cout << "magazine - 1" << std::endl;
+        std::cout << "publisher - 2" << std::endl;
+        std::cin >> user_input_int;
+        switch (user_input_int) {
+            case 1:{
+                magazine_action();
+                break;
+            }
+            case 2:{
+                just.publisher_action();
+                break;
+            }
+        }
     }
 
     void edit(){
@@ -661,7 +793,7 @@ public:
                 break;
             }
             case 3:{
-                delete_or_edit();
+                delete_or_edit_menu();
                 break;
             }
             case 4:{
