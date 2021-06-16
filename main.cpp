@@ -221,19 +221,6 @@ public:
             }
         }
 
-        void pick_show(){
-            Publishers *node_element = Head;
-            while (node_element != nullptr)
-            {
-                std::cout << std::endl;
-                std::cout << '|'  <<  std::setfill(' ') << std::setw(10) << "index - " <<  std::setfill(' ') << std::setw(10) << node_element->index
-                          << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(10) << node_element->name << std::endl;
-                std::cout << std::endl;
-                node_element = node_element->next;
-            }
-
-        }
-
         void show(){
             Publishers *node_element = Head;
             std::cout << std::endl;
@@ -323,6 +310,19 @@ public:
             }
         }
 
+        void pick_show(){
+            Publishers *node_element = Head;
+            while (node_element != nullptr)
+            {
+                std::cout << std::endl;
+                std::cout << '|'  <<  std::setfill(' ') << std::setw(10) << "index - " <<  std::setfill(' ') << std::setw(10) << node_element->index
+                          << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(10) << node_element->name << std::endl;
+                std::cout << std::endl;
+                node_element = node_element->next;
+            }
+
+        }
+
         void journals_of_publisher(){
             pick_show();
             std::cout << "input name of publisher - " << std::endl;
@@ -344,20 +344,18 @@ public:
             }
         }
 
-        char publisher_ch
-        void pick_show(){
-
-        }
+        int magazine_choice;
+        char choice_publisher_remove_or_edit[N]; // сюда записываем айди издателя для для действий с ним
+        int magazine_choice_field;
 
         void publisher_action(){
-
             pick_show();
             std::cout << "choose journal that you want edit or remove" << std::endl;
             std::cout << "input id of journal" << std::endl;
             std::cin >> magazine_choice;
-            Magazine *node_element = Head;
+            Publishers *node_element = Head;
             while (node_element != nullptr){
-                if (magazine_choice == node_element->id){
+                if (choice_publisher_remove_or_edit == node_element->index){
                     std::cout << "if you want remove this notation - 1" << std::endl;
                     std::cout << "if you want edit this notation - 2" << std::endl;
                     std::cin >> magazine_remove_or_edit;
@@ -374,9 +372,7 @@ public:
                 }
                 node_element = node_element->next;
             }
-
         }
-
     };
 
 
@@ -462,7 +458,7 @@ public:
         std::cout << "1 - Make one more notation " << std::endl;
         std::cout << "0 - Exit to main menu" << std::endl;
         std::cin >> user_input_int;
-        switch (user_input_int) {
+        switch (user_input_int){
             case 1:
                 add();
                 break;
@@ -556,7 +552,7 @@ public:
                     }
                     case 2:{
                         std::cout << "input new value for filed name (char)" << std::endl;
-                        std::cin >> node_element->id;
+                        std::cin >> node_element->name;
                         break;
                     }
                     case 3:{
@@ -610,9 +606,6 @@ public:
         }
     }
 
-    void edit(){
-        std::cout << "edit" << std::endl;
-    }
 
     void save(){
         std::cout << "saving..." << std::endl;
@@ -826,7 +819,7 @@ public:
                 break;
             }
             case 4:{
-                edit();
+                //edit();
                 break;
             }
             case 5:{
@@ -931,8 +924,6 @@ public:
             std::cout << std::endl;
             node_element = node_element->next;
         }
-
-
     }
 
     void sort_show(){
@@ -969,7 +960,6 @@ public:
         while (left->next) {                 //Обходим по всем звеньям, за исключением крайнего правого
             while (right) {              //Обходим по всем звеньям, включая крайний правый (по всем относительно первого левого на текущий момент)
                 if ((left->price) < (right->price)) {        //Проверяем необходимость перестановки
-
                     temp->price = left->price;              //И переставляем все внутренние элементы, за исключением указателей связи, местами
                     temp->id = left->id;
                     strcpy(temp->publisher, left->publisher);
@@ -993,7 +983,6 @@ public:
                     right->discounts = temp->discounts;
                     right->release_number = temp->release_number;
                     right->release_frequency = temp->release_frequency;
-
                 }
                 right = right->next;                    //не забываем направлять указатель на следующий элемент (по подобию инкремента), иначе цикл зависнет
             }
@@ -1014,7 +1003,6 @@ public:
         while (left->next) {                 //Обходим по всем звеньям, за исключением крайнего правого
             while (right) {              //Обходим по всем звеньям, включая крайний правый (по всем относительно первого левого на текущий момент)
                 if ((left->release_number) < (right->release_number)) {        //Проверяем необходимость перестановки
-
                     temp->price = left->price;              //И переставляем все внутренние элементы, за исключением указателей связи, местами
                     temp->id = left->id;
                     strcpy(temp->publisher, left->publisher);
@@ -1038,7 +1026,6 @@ public:
                     right->discounts = temp->discounts;
                     right->release_number = temp->release_number;
                     right->release_frequency = temp->release_frequency;
-
                 }
                 right = right->next;                    //не забываем направлять указатель на следующий элемент (по подобию инкремента), иначе цикл зависнет
             }
@@ -1066,7 +1053,6 @@ public:
         while (left->next) {                 //Обходим по всем звеньям, за исключением крайнего правого
             while (right) {              //Обходим по всем звеньям, включая крайний правый (по всем относительно первого левого на текущий момент)
                 if (result>0) {        //Проверяем необходимость перестановки
-
                     temp->price = left->price;              //И переставляем все внутренние элементы, за исключением указателей связи, местами
                     temp->id = left->id;
                     strcpy(temp->publisher, left->publisher);
@@ -1090,18 +1076,15 @@ public:
                     right->discounts = temp->discounts;
                     right->release_number = temp->release_number;
                     right->release_frequency = temp->release_frequency;
-
                 }
                 right = right->next;                    //не забываем направлять указатель на следующий элемент (по подобию инкремента), иначе цикл зависнет
             }
             left = left->next;                              //не забываем направлять указатель на следующий элемент (по подобию инкремента), иначе цикл зависнет
             right = left->next;                             //Поскольку второй указатель убежал немного вперёд, обязательно возвращаем его назад, это следующий элемент относительно текущего первого
         }
-
         sort_show();
         streamline_journals_menu();
     }
-
 
 
     void show_journal(){
