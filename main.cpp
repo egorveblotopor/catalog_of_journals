@@ -58,20 +58,20 @@ public:
 };
 
 
-struct StreamlineNode{
-public:
-    int id;
-    char name[N]; //название
-    int parameter_int; // сюда заносим параметр для сортировкис
-    struct StreamlineNode *next;
-    struct StreamlineNode *prev;
-};
+//struct StreamlineNode{
+//public:
+//    int id;
+//    char name[N]; //название
+//    int parameter_int; // сюда заносим параметр для сортировкис
+//    struct StreamlineNode *next;
+//    struct StreamlineNode *prev;
+//};
 
 
 class InformationSystem{
 public:
     Magazine *Head, *Tail;
-    StreamlineNode *Head_0, Tail_0;
+//    StreamlineNode *Head_0, Tail_0;
 
 // конструктор
     InformationSystem(): Head(nullptr), Tail(nullptr){};
@@ -344,34 +344,93 @@ public:
             }
         }
 
-        int magazine_choice;
-        char choice_publisher_remove_or_edit[N]; // сюда записываем айди издателя для для действий с ним
+        char publisher_choice_id[N]; // сюда записываем айди издателя для для действий с ним
+        int choice_publisher_remove_or_edit; // choose remove or edit
         int magazine_choice_field;
 
         void publisher_action(){
             pick_show();
-            std::cout << "choose journal that you want edit or remove" << std::endl;
-            std::cout << "input id of journal" << std::endl;
-            std::cin >> magazine_choice;
+            std::cout << "choose publisher that you want edit or remove with id" << std::endl;
+            std::cout << "input id of publisher" << std::endl;
+            std::cin >> publisher_choice_id;
             Publishers *node_element = Head;
             while (node_element != nullptr){
-                if (choice_publisher_remove_or_edit == node_element->index){
+                if (publisher_choice_id == node_element->index){
                     std::cout << "if you want remove this notation - 1" << std::endl;
                     std::cout << "if you want edit this notation - 2" << std::endl;
-                    std::cin >> magazine_remove_or_edit;
-                    switch (magazine_remove_or_edit) {
+                    std::cin >> choice_publisher_remove_or_edit;
+                    switch (choice_publisher_remove_or_edit) {
                         case 1:{
-                            magazine_remove();
+                            publisher_remove();
                             break;
                         }
                         case 2:{
-                            magazine_edit();
+                            publisher_edit();
                             break;
                         }
                     }
+                    break;
                 }
                 node_element = node_element->next;
             }
+        }
+
+        void publisher_remove(){
+            Publishers *node_element = Head;
+            while (node_element->index != publisher_choice_id){
+                if (node_element->index == publisher_choice_id){
+                    node_element->prev->next = node_element->next;
+                    node_element->next->prev = node_element->prev;
+                    break;
+                }
+                node_element = node_element->next;
+            }
+            std::cout << "remove is succesfully finished" << std::endl;
+            InformationSystem().menu();
+        }
+
+        void publisher_edit(){
+            Publishers *node_element = Head;
+            while (node_element->index != publisher_choice_id){
+                if (node_element->index == publisher_choice_id) {
+                    std::cout << "pick the field for edit" << std::endl;
+                    std::cout << std::endl;
+                    std::cout << '|' << std::setfill(' ') << std::setw(10) << "index - " << std::setfill(' ')
+                              << std::setw(10) << node_element->index << '|' << std::setfill(' ') << std::setw(10) << "1"
+                              << '|' << std::endl;
+                    std::cout << "|" << std::setfill(' ') << std::setw(10) << "name - " << std::setfill(' ')
+                              << std::setw(10) << node_element->name << '|' << std::setfill(' ') << std::setw(10) << "2"
+                              << '|' << std::endl;
+                    std::cout << "|" << std::setfill(' ') << std::setw(10) << "price - " << std::setfill(' ')
+                              << std::setw(10) << node_element->address << '|' << std::setfill(' ') << std::setw(10) << "3"
+                              << '|' << std::endl;
+                    std::cout << std::endl;
+
+                    std::cout << "pick the field for edit" << std::endl;
+                    std::cin >> magazine_choice_field;
+                    switch (magazine_choice_field) {
+                        case 1:{
+                            std::cout << "input new value for filed id (int)" << std::endl;
+                            std::cin >> node_element->index;
+                            break;
+                        }
+                        case 2:{
+                            std::cout << "input new value for filed name (char)" << std::endl;
+                            std::cin >> node_element->name;
+                            break;
+                        }
+                        case 3:{
+                            std::cout << "input new value for filed price (int)" << std::endl;
+                            std::cin >> node_element->address;
+                            break;
+                        }
+                    }
+                    break;
+                }
+                node_element = node_element->next;
+            }
+            std::cout << "edit is successfully finished" << std::endl;
+            InformationSystem().menu();
         }
     };
 
@@ -801,9 +860,6 @@ public:
                 std::cin >> user_input_int;
                 switch (user_input_int)
                 {
-                    case 1:
-                        add();
-                        break;
                     case 0:
                         menu();
                         break;
