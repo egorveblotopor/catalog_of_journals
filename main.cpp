@@ -73,40 +73,14 @@ public:
     Magazine *Head, *Tail;
 //    StreamlineNode *Head_0, Tail_0;
 
-// конструктор
     InformationSystem(): Head(nullptr), Tail(nullptr){};
 
-// деструктор
     ~InformationSystem(){
         while (Head) {
             Tail = Head->next;
             delete Head;
             Head = Tail;
         }
-    }
-
-    void show_main(){
-        Magazine *node_element = Head;
-
-        std::cout << std::endl;
-        std::cout << std::endl;
-        std::cout << "List of magazines" << std::endl;
-
-        while (node_element != nullptr)
-        {
-
-            std::cout << std::endl;
-            std::cout << '|'  <<  std::setfill(' ') << std::setw(5) << "id - " <<  std::setfill(' ') << std::setw(5) << node_element->id
-                      << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(10) << node_element->name
-                      << "|" <<  std::setfill(' ') << std::setw(15) << "release num - " <<  std::setfill(' ') << std::setw(15) << node_element->release_number << "|" << std::endl
-                      << "|" <<  std::setfill(' ') << std::setw(20) << "release frequency - " <<  std::setfill(' ') << std::setw(15) << node_element->release_frequency << "|" << std::endl
-                      << "|" <<  std::setfill(' ') << std::setw(20) << "price - " <<  std::setfill(' ') << std::setw(15) << node_element->price << "|" << std::endl
-                      << "|" <<  std::setfill(' ') << std::setw(20) << "discounts - " <<  std::setfill(' ') << std::setw(15) << node_element->discounts << "|" << std::endl
-                      << "|" <<  std::setfill(' ') << std::setw(20) << "publisher - " <<  std::setfill(' ') << std::setw(15) << node_element->publisher << "|" << std::endl;
-            std::cout << std::endl;
-            node_element = node_element->next;
-        }
-
     }
 
 
@@ -151,7 +125,7 @@ public:
                 loco += " ";
                 loco += '\n';
                 std::ofstream out;
-                out.open("X:\\database_publishers.txt", std::ofstream::out | std::ofstream::app);
+                out.open("E:\\database_publishers.txt", std::ofstream::out | std::ofstream::app);
                 out << loco;
                 out.close();
                 node_element = node_element->next;// двигаемся к следующему элементу
@@ -165,7 +139,7 @@ public:
         char third_pub[N];
 
         void load(){
-            std::ifstream file("X:\\database_publishers.txt");
+            std::ifstream file("E:\\database_publishers.txt");
             std::string data_from_file;
             int local_index = 1;
             std::string loco; // локальная переменная для изменения данных
@@ -201,7 +175,11 @@ public:
                 }
             }
             file.close();
-            std::cout << "load is successfully done!" << std::endl;
+            std::cout  << '.'  <<  std::setfill('_') << std::setw(50) << '.' << std::endl;
+            std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
+            std::cout  << '|'  <<  std::setfill(' ') << std::setw(30) << "load is done!" <<  std::setfill(' ') << std::setw(20) << '|' << std::endl;
+            std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
+            std::cout  << '|'  <<  std::setfill('_') << std::setw(50) << '|' << std::endl;
         }
 
         void adder(){
@@ -436,6 +414,41 @@ public:
 
 
     Publishers_list just;
+
+
+    void show_main(){
+        Magazine *node_element = Head;
+
+        std::cout << std::endl;
+        std::cout << std::endl;
+
+
+
+        std::cout  << '.'  <<  std::setfill('_') << std::setw(60) << '.' << std::endl;
+        std::cout  << '|'  <<  std::setfill(' ') << std::setw(60) << '|' << std::endl;
+        std::cout  << '|'  <<  std::setfill(' ') << std::setw(35) << "list of magazines" <<  std::setfill(' ') << std::setw(25) << '|' << std::endl;
+        std::cout  << '|'  <<  std::setfill(' ') << std::setw(60) << '|' << std::endl;
+        std::cout  << '|'  <<  std::setfill('_') << std::setw(60) << '|' << std::endl;
+
+
+
+        while (node_element != nullptr)
+        {
+            std::cout << '|'  <<  std::setfill(' ') << std::setw(20) << "id - " << '|'  <<  std::setfill(' ') << std::setw(39) << node_element->id << "|" << std::endl;
+            std::cout << "|" <<  std::setfill(' ') << std::setw(20) << "name - " << '|'  <<  std::setfill(' ') << std::setw(39) << node_element->name << "|" << std::endl;
+            std::cout << "|" <<  std::setfill(' ') << std::setw(20) << "release num - " << '|'  <<  std::setfill(' ') << std::setw(39) << node_element->release_number << "|" << std::endl;
+            std::cout << "|" <<  std::setfill(' ') << std::setw(20) << "release frequency - " << '|'  <<  std::setfill(' ') << std::setw(39) << node_element->release_frequency << "|" << std::endl;
+            std::cout << "|" <<  std::setfill(' ') << std::setw(20) << "price - " << '|'  <<  std::setfill(' ') << std::setw(39) << node_element->price << "|" << std::endl;
+            std::cout << "|" <<  std::setfill(' ') << std::setw(20) << "discounts - " << '|'  <<  std::setfill(' ') << std::setw(39) << node_element->discounts << "|" << std::endl;
+            std::cout << "|" <<  std::setfill(' ') << std::setw(20) << "publisher - " << '|'  <<  std::setfill(' ') << std::setw(39) << node_element->publisher << "|" << std::endl;
+            std::cout  << '|'  <<  std::setfill('_') << std::setw(60) << '|' << std::endl;
+            node_element = node_element->next;
+
+
+        }
+        std::cout  << std::endl;
+        std::cout  << std::endl;
+    }
 
     void add_pub_menu(){
         std::cout << "choose the option" << std::endl;
@@ -687,7 +700,7 @@ public:
             loco += " ";
             loco += "\n";
             std::ofstream out;
-            out.open("X:\\database.txt", std::ofstream::out | std::ofstream::app);
+            out.open("E:\\database.txt", std::ofstream::out | std::ofstream::app);
             out << loco;
             out.close();
             node_element = node_element->next;// двигаемся к следующему элементу
@@ -707,7 +720,7 @@ public:
     char seventh[N];
 
     void load() {
-        std::ifstream file("X:\\database.txt");
+        std::ifstream file("E:\\database.txt");
         std::string data_from_file;
         int local_index = 1;
         std::string loco; // локальная переменная для изменения данных
@@ -766,7 +779,13 @@ public:
             }
         }
         file.close();
-        std::cout << "load is successfully done!" << std::endl;
+
+        std::cout  << '.'  <<  std::setfill('_') << std::setw(50) << '.' << std::endl;
+        std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
+        std::cout  << '|'  <<  std::setfill(' ') << std::setw(30) << "load is done!" <<  std::setfill(' ') << std::setw(20) << '|' << std::endl;
+        std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
+        std::cout  << '|'  <<  std::setfill('_') << std::setw(50) << '|' << std::endl;
+
         just.load();
         menu();
     }
@@ -823,7 +842,14 @@ public:
         }
         return counter;
     }
+/*
+         std::cout  << '.'  <<  std::setfill('_') << std::setw(50) << '.' << std::endl;
+        std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
 
+                std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
+        std::cout  << '|'  <<  std::setfill('_') << std::setw(50) << '|' << std::endl;
+
+ */
     void menu(){
         int loco_counter;
         loco_counter = count();
@@ -1192,7 +1218,6 @@ public:
         }
         search_menu();
     }
-
 
 };
 
