@@ -125,7 +125,7 @@ public:
                 loco += " ";
                 loco += '\n';
                 std::ofstream out;
-                out.open("E:\\database_publishers.txt", std::ofstream::out | std::ofstream::app);
+                out.open("X:\\database_publishers.txt", std::ofstream::out | std::ofstream::app);
                 out << loco;
                 out.close();
                 node_element = node_element->next;// двигаемся к следующему элементу
@@ -139,7 +139,7 @@ public:
         char third_pub[N];
 
         void load(){
-            std::ifstream file("E:\\database_publishers.txt");
+            std::ifstream file("X:\\database_publishers.txt");
             std::string data_from_file;
             int local_index = 1;
             std::string loco; // локальная переменная для изменения данных
@@ -700,7 +700,7 @@ public:
             loco += " ";
             loco += "\n";
             std::ofstream out;
-            out.open("E:\\database.txt", std::ofstream::out | std::ofstream::app);
+            out.open("X:\\database.txt", std::ofstream::out | std::ofstream::app);
             out << loco;
             out.close();
             node_element = node_element->next;// двигаемся к следующему элементу
@@ -720,7 +720,7 @@ public:
     char seventh[N];
 
     void load() {
-        std::ifstream file("E:\\database.txt");
+        std::ifstream file("X:\\database.txt");
         std::string data_from_file;
         int local_index = 1;
         std::string loco; // локальная переменная для изменения данных
