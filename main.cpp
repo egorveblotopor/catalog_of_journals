@@ -34,6 +34,7 @@ int user_input_int;
 char user_input_char[N];
 
 struct Magazine{
+public:
     char id[N]; //индекс
     char name[N]; //название
     char release_number[N]; //тираж
@@ -245,17 +246,19 @@ public:
             Publishers *node_element = Head;
             if (Head != nullptr){
                 show();
-                std::cout << "pick the publisher" << std::endl;
+                std::cout << "pick the publisher - input the id of a publisher" << std::endl;
                 std::cin >> user_input_char;
-                std::cout << "you entered - " << user_input_int << std::endl;
+                std::cout << "you entered - " << user_input_char << std::endl;
                 while (node_element != nullptr)
                 {
 
-                    char loco_1[N], loco_2[N];
-                    strcpy(loco_1, user_input_char);
-                    strcpy(loco_2, node_element->name);
+                    // char loco_1[N], loco_2[N];
+                    // strcpy(loco_1, user_input_char);
+                    // strcpy(loco_2, node_element->name);
                     int result;
-                    result = strcmp(loco_1, loco_2);
+                    result = strcmp(user_input_char, node_element->name);
+                    std::cout << result << "its result" << std::endl;
+
                     if (result == 0)
                     {
                         std::cout << "OK" << std::endl;
@@ -439,13 +442,13 @@ public:
     void add_pub_menu(){
         std::cout << "choose the option" << std::endl;
         std::cout << "1 - Add new publisher with keyboard " << std::endl;
-        std::cout << "0 - Get it from list" << std::endl;
+        std::cout << "2 - Get it from list" << std::endl;
         std::cin >> user_input_int;
         switch (user_input_int) {
             case 1:
                 just.add_new();
                 break;
-            case 0:
+            case 2:
                 just.get_from_list();
                 break;
         }
