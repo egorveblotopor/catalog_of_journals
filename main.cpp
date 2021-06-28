@@ -31,7 +31,8 @@
 //using namespace std;
 
 
-const int N = 8;// играл с размером чаров... проиграл
+const int N = 20;// играл с размером чаров... проиграл
+
 int user_input_int;
 char user_input_char[N];
 
@@ -167,7 +168,6 @@ public:
                     }
                     case 3: // release num int
                     {
-                        //std::cout << data_from_file.length() << "|" << data_from_file << std::endl;
                         strcpy(third_pub, data_from_file.c_str());
                         adder();
                         local_index = 1;
@@ -494,7 +494,7 @@ public:
             std::cin >> node->price;//Записываем значение в структуру
 
             std::cout << "input information about discounts in % (example: 30)" << std::endl;
-            std::cin >> node->release_number;//Записываем значение в структуру
+            std::cin >> node->discounts;//Записываем значение в структуру
 
             add_pub_menu();
             strcpy(node->publisher, just.pub_list_name_pub);
@@ -521,7 +521,7 @@ public:
             std::cin >> node->price;//Записываем значение в структуру
 
             std::cout << "input information about discounts in % (example: 30)" << std::endl;
-            std::cin >> node->release_number;//Записываем значение в структуру
+            std::cin >> node->discounts;//Записываем значение в структуру
 
             add_pub_menu();
             strcpy(node->publisher, just.pub_list_name_pub);
@@ -854,7 +854,6 @@ public:
         }
         return counter;
     }
-
 
     void menu(){
         int loco_counter;
