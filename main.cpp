@@ -7,15 +7,6 @@
 #include <sstream>
 #include <string.h>
 
-/*
-реализовать сортировки:
-- по цене
-- по тиражу
-- по названию
-- по издательствам
-- по льготам
-Реализовать поиск по названию.
-*/
 
 /*
  Подготовить справочник для подписки на издания.
@@ -26,12 +17,18 @@
 - о газетах и журналах, выпускаемых определенным издательством,
 - об определенной газете или журнале,
 - на какие газеты и/или журналы предоставляется льготная подписка.
+
+ реализовать сортировки:
+- по цене
+- по тиражу
+- по названию
+- по издательствам
+- по льготам
+Реализовать поиск по названию.
  */
 
-//using namespace std;
 
-
-const int N = 20;// играл с размером чаров... проиграл
+const int N = 20;
 
 int user_input_int;
 char user_input_char[N];
@@ -49,7 +46,6 @@ struct Magazine{
     struct Magazine *prev;
 };
 
-
 struct Publishers{
 public:
     char index[N];
@@ -60,20 +56,9 @@ public:
 };
 
 
-//struct StreamlineNode{
-//public:
-//    int id;
-//    char name[N]; //название
-//    int parameter_int; // сюда заносим параметр для сортировкис
-//    struct StreamlineNode *next;
-//    struct StreamlineNode *prev;
-//};
-
-
 class InformationSystem{
 public:
     Magazine *Head, *Tail;
-//    StreamlineNode *Head_0, Tail_0;
 
     InformationSystem(): Head(nullptr), Tail(nullptr){};
 
