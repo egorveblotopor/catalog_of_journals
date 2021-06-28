@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <string>
 #include <sstream>
+#include <string.h>
 
 /*
 реализовать сортировки:
@@ -125,7 +126,7 @@ public:
                 loco += " ";
                 loco += '\n';
                 std::ofstream out;
-                out.open("X:\\database_publishers.txt", std::ofstream::out | std::ofstream::app);
+                out.open("E:\\database_publishers.txt", std::ofstream::out | std::ofstream::app);
                 out << loco;
                 out.close();
                 node_element = node_element->next;// двигаемся к следующему элементу
@@ -139,7 +140,7 @@ public:
         char third_pub[N];
 
         void load(){
-            std::ifstream file("X:\\database_publishers.txt");
+            std::ifstream file("E:\\database_publishers.txt");
             std::string data_from_file;
             int local_index = 1;
             std::string loco; // локальная переменная для изменения данных
@@ -541,7 +542,7 @@ public:
     }
 
 
-    int magazine_choice;
+    char magazine_choice[N];
     int magazine_remove_or_edit; // сюда записываем айди журнала для для действий с ним
     int magazine_choice_field;
 
@@ -552,7 +553,8 @@ public:
         std::cin >> magazine_choice;
         Magazine *node_element = Head;
         while (node_element != nullptr){
-            if (magazine_choice == node_element->id){
+            int result = strcmp(magazine_choice, &node_element->id);
+            if (result == 0){
                 std::cout << "if you want remove this notation - 1" << std::endl;
                 std::cout << "if you want edit this notation - 2" << std::endl;
                 std::cin >> magazine_remove_or_edit;
@@ -573,8 +575,9 @@ public:
 
     void magazine_remove(){
         Magazine *node_element = Head;
-        while (node_element->id != magazine_choice){
-            if (node_element->id == magazine_choice){
+        while (node_element != nullptr){
+            int result = strcmp(magazine_choice, &node_element->id);
+            if (result == 0){
                 node_element->prev->next = node_element->next;
                 node_element->next->prev = node_element->prev;
                 break;
@@ -587,8 +590,9 @@ public:
 
     void magazine_edit(){
         Magazine *node_element = Head;
-        while (node_element->id != magazine_choice){
-            if (node_element->id == magazine_choice) {
+        while (node_element != nullptr){
+            int result = strcmp(magazine_choice, &node_element->id);
+            if (result == 0) {
                 std::cout << "pick the field for edit" << std::endl;
                 std::cout << std::endl;
                 std::cout << '|' << std::setfill(' ') << std::setw(10) << "index - " << std::setfill(' ')
@@ -700,7 +704,7 @@ public:
             loco += " ";
             loco += "\n";
             std::ofstream out;
-            out.open("X:\\database.txt", std::ofstream::out | std::ofstream::app);
+            out.open("E:\\database.txt", std::ofstream::out | std::ofstream::app);
             out << loco;
             out.close();
             node_element = node_element->next;// двигаемся к следующему элементу
@@ -720,7 +724,7 @@ public:
     char seventh[N];
 
     void load() {
-        std::ifstream file("X:\\database.txt");
+        std::ifstream file("E:\\database.txt");
         std::string data_from_file;
         int local_index = 1;
         std::string loco; // локальная переменная для изменения данных
