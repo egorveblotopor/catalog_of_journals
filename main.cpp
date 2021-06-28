@@ -188,18 +188,23 @@ public:
 
         void show(){
             Publishers *node_element = Head;
-            std::cout << std::endl;
-            std::cout << std::endl;
-            std::cout << "List of publishers" << std::endl;
+
+            std::cout  << '.'  <<  std::setfill('_') << std::setw(60) << '.' << std::endl;
+            std::cout  << '|'  <<  std::setfill(' ') << std::setw(60) << '|' << std::endl;
+            std::cout  << '|'  <<  std::setfill(' ') << std::setw(34) << "List of publishers" <<  std::setfill(' ') << std::setw(25) << '|' << std::endl;
+            std::cout  << '|'  <<  std::setfill(' ') << std::setw(60) << '|' << std::endl;
+            std::cout  << '|'  <<  std::setfill('_') << std::setw(60) << '|' << std::endl;
+
             while (node_element != nullptr)
             {
-                std::cout << std::endl;
-                std::cout << '|'  <<  std::setfill(' ') << std::setw(10) << "index - " <<  std::setfill(' ') << std::setw(10) << node_element->index
-                          << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(10) << node_element->name
-                          << "|" <<  std::setfill(' ') << std::setw(10) << "address - " <<  std::setfill(' ') << std::setw(20) << node_element->address << "|" << std::endl;
-                std::cout << std::endl;
+                std::cout << '|'  <<  std::setfill(' ') << std::setw(20) << "index - " <<  std::setfill(' ') << std::setw(39) << node_element->index << "|" << std::endl;
+                std::cout << "|" <<  std::setfill(' ') << std::setw(20) << "name - " <<  std::setfill(' ') << std::setw(39) << node_element->name << "|" << std::endl;
+                std::cout << "|" <<  std::setfill(' ') << std::setw(20) << "address - " <<  std::setfill(' ') << std::setw(39) << node_element->address << "|" << std::endl;
+                std::cout  << '|'  <<  std::setfill('_') << std::setw(60) << '|' << std::endl;
                 node_element = node_element->next;
             }
+            std::cout << std::endl;
+            std::cout << std::endl;
         }
 
         void add_new(){
@@ -251,10 +256,6 @@ public:
                 std::cout << "you entered - " << user_input_char << std::endl;
                 while (node_element != nullptr)
                 {
-
-                    // char loco_1[N], loco_2[N];
-                    // strcpy(loco_1, user_input_char);
-                    // strcpy(loco_2, node_element->name);
                     int result;
                     result = strcmp(user_input_char, node_element->name);
                     std::cout << result << "its result" << std::endl;
@@ -859,11 +860,10 @@ public:
         std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
         std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << " Show information - 1" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
         std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Add information - 2" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
-        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Delete or edit - 3" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
-        //std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Edit information - 4" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
-        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Save information to file - 5" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
-        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Load information from file - 6" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
-        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Search information - 7" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Delete or edit information - 3" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Save information to file - 4" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Load information from file - 5" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
+        std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Search information - 6" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
         std::cout << '|'  <<  std::setfill(' ') << std::setw(35) << "Exit - 0" <<  std::setfill(' ') << std::setw(15) << '|' << std::endl;
         std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
         std::cout  << '|'  <<  std::setfill('_') << std::setw(50) << '|' << std::endl;
@@ -894,18 +894,14 @@ public:
                 break;
             }
             case 4:{
-                //edit();
-                break;
-            }
-            case 5:{
                 save();
                 break;
             }
-            case 6:{
+            case 5:{
                 load();
                 break;
             }
-            case 7:{
+            case 6:{
                 search_menu();
                 break;
             }
