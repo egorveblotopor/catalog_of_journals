@@ -734,7 +734,12 @@ public:
             switch (local_index) {
                 case 1:
                 {
-                    strcpy(first, data_from_file.c_str());
+                    loco = data_from_file;
+                    change_index = loco.find('\n');
+                    if (change_index != -1){
+                        loco = loco.erase(change_index, 1);
+                    }
+                    strcpy(first, loco.c_str());
                     local_index += 1;
                     break;
                 }
