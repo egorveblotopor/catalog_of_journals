@@ -35,12 +35,12 @@ int user_input_int;
 char user_input_char[N];
 
 struct Magazine{
-    int id; //индекс
+    char id; //индекс
     char name[N]; //название
-    int release_number; //тираж
-    int release_frequency; // частота выхода (коллличество номеров за квартал)
-    int price; // цена
-    int discounts; // скидки
+    char release_number; //тираж
+    char release_frequency; // частота выхода (коллличество номеров за квартал)
+    char price; // цена
+    char discounts; // скидки
     char publisher[N]; // издатель
 
     struct Magazine *next; // указатели на некст и прев элементы
@@ -478,7 +478,7 @@ public:
             Tail = node; //Меняем адрес хвоста
 
             std::cout << "add index" << std::endl;
-            node->id = count();
+            std::cin >>node->id;
 
             std::cout << "enter name of magazine" << std::endl;
             std::cin >> node->name;//Записываем значение в структуру
@@ -505,7 +505,7 @@ public:
             Head = Tail = node; //Голова=Хвост=тот элемент, что сейчас добавили
 
             std::cout << "add index" << std::endl;
-            node->id = 1;
+            std::cin >>node->id;
 
             std::cout << "enter name of magazine" << std::endl;
             std::cin >> node->name;//Записываем значение в структуру
@@ -842,14 +842,8 @@ public:
         }
         return counter;
     }
-/*
-         std::cout  << '.'  <<  std::setfill('_') << std::setw(50) << '.' << std::endl;
-        std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
 
-                std::cout  << '|'  <<  std::setfill(' ') << std::setw(50) << '|' << std::endl;
-        std::cout  << '|'  <<  std::setfill('_') << std::setw(50) << '|' << std::endl;
 
- */
     void menu(){
         int loco_counter;
         loco_counter = count();
