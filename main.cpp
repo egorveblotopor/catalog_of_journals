@@ -36,12 +36,12 @@ int user_input_int;
 char user_input_char[N];
 
 struct Magazine{
-    char id; //индекс
+    char id[N]; //индекс
     char name[N]; //название
-    char release_number; //тираж
-    char release_frequency; // частота выхода (коллличество номеров за квартал)
-    char price; // цена
-    char discounts; // скидки
+    char release_number[N]; //тираж
+    char release_frequency[N]; // частота выхода (коллличество номеров за квартал)
+    char price[N]; // цена
+    char discounts[N]; // скидки
     char publisher[N]; // издатель
 
     struct Magazine *next; // указатели на некст и прев элементы
@@ -553,7 +553,7 @@ public:
         std::cin >> magazine_choice;
         Magazine *node_element = Head;
         while (node_element != nullptr){
-            int result = strcmp(magazine_choice, &node_element->id);
+            int result = strcmp(magazine_choice, node_element->id);
             if (result == 0){
                 std::cout << "if you want remove this notation - 1" << std::endl;
                 std::cout << "if you want edit this notation - 2" << std::endl;
@@ -576,7 +576,7 @@ public:
     void magazine_remove(){
         Magazine *node_element = Head;
         while (node_element != nullptr){
-            int result = strcmp(magazine_choice, &node_element->id);
+            int result = strcmp(magazine_choice, node_element->id);
             if (result == 0){
                 node_element->prev->next = node_element->next;
                 node_element->next->prev = node_element->prev;
@@ -591,7 +591,7 @@ public:
     void magazine_edit(){
         Magazine *node_element = Head;
         while (node_element != nullptr){
-            int result = strcmp(magazine_choice, &node_element->id);
+            int result = strcmp(magazine_choice, node_element->id);
             if (result == 0) {
                 std::cout << "pick the field for edit" << std::endl;
                 std::cout << std::endl;
@@ -1043,29 +1043,32 @@ public:
         while (left->next) {                 //Обходим по всем звеньям, за исключением крайнего правого
             while (right) {              //Обходим по всем звеньям, включая крайний правый (по всем относительно первого левого на текущий момент)
                 if ((left->price) < (right->price)) {        //Проверяем необходимость перестановки
-                    temp->price = left->price;              //И переставляем все внутренние элементы, за исключением указателей связи, местами
-                    temp->id = left->id;
+
+                    //И переставляем все внутренние элементы, за исключением указателей связи, местами
+
+                    strcpy(temp->price, left->price);
+                    strcpy(temp->id, left->id);
                     strcpy(temp->publisher, left->publisher);
                     strcpy(temp->name, left->name);
-                    temp->discounts = left->discounts;
-                    temp->release_number = left->release_number;
-                    temp->release_frequency = left->release_frequency;
+                    strcpy(temp->discounts, left->discounts);
+                    strcpy(temp->release_number, left->release_number);
+                    strcpy(temp->release_frequency, left->release_frequency);
 
-                    left->price = right->price;             //Сейчас у нас имеется только x, поэтому только его
-                    left->id = right->id;
+                    strcpy(left->price, right->price);
+                    strcpy(left->id, right->id);
                     strcpy(left->publisher, right->publisher);
                     strcpy(left->name, right->name);
-                    left->discounts = right->discounts;
-                    left->release_number = right->release_number;
-                    left->release_frequency = right->release_frequency;
+                    strcpy(left->discounts, right->discounts);
+                    strcpy(left->release_number, right->release_number);
+                    strcpy(left->release_frequency, right->release_frequency);
 
-                    right->price = temp->price;             //иначе бы  нужно было это проделывать для каждого несвязующего элемента
-                    right->id = temp->id;
+                    strcpy(right->price, temp->price);
+                    strcpy(right->id, temp->id);
                     strcpy(right->publisher, temp->publisher);
                     strcpy(right->name, temp->name);
-                    right->discounts = temp->discounts;
-                    right->release_number = temp->release_number;
-                    right->release_frequency = temp->release_frequency;
+                    strcpy(right->discounts, temp->discounts);
+                    strcpy(right->release_number, temp->release_number);
+                    strcpy(right->release_frequency, temp->release_frequency);
                 }
                 right = right->next;                    //не забываем направлять указатель на следующий элемент (по подобию инкремента), иначе цикл зависнет
             }
@@ -1086,29 +1089,32 @@ public:
         while (left->next) {                 //Обходим по всем звеньям, за исключением крайнего правого
             while (right) {              //Обходим по всем звеньям, включая крайний правый (по всем относительно первого левого на текущий момент)
                 if ((left->release_number) < (right->release_number)) {        //Проверяем необходимость перестановки
-                    temp->price = left->price;              //И переставляем все внутренние элементы, за исключением указателей связи, местами
-                    temp->id = left->id;
+
+                    //И переставляем все внутренние элементы, за исключением указателей связи, местами
+
+                    strcpy(temp->price, left->price);
+                    strcpy(temp->id, left->id);
                     strcpy(temp->publisher, left->publisher);
                     strcpy(temp->name, left->name);
-                    temp->discounts = left->discounts;
-                    temp->release_number = left->release_number;
-                    temp->release_frequency = left->release_frequency;
+                    strcpy(temp->discounts, left->discounts);
+                    strcpy(temp->release_number, left->release_number);
+                    strcpy(temp->release_frequency, left->release_frequency);
 
-                    left->price = right->price;             //Сейчас у нас имеется только x, поэтому только его
-                    left->id = right->id;
+                    strcpy(left->price, right->price);
+                    strcpy(left->id, right->id);
                     strcpy(left->publisher, right->publisher);
                     strcpy(left->name, right->name);
-                    left->discounts = right->discounts;
-                    left->release_number = right->release_number;
-                    left->release_frequency = right->release_frequency;
+                    strcpy(left->discounts, right->discounts);
+                    strcpy(left->release_number, right->release_number);
+                    strcpy(left->release_frequency, right->release_frequency);
 
-                    right->price = temp->price;             //иначе бы  нужно было это проделывать для каждого несвязующего элемента
-                    right->id = temp->id;
+                    strcpy(right->price, temp->price);
+                    strcpy(right->id, temp->id);
                     strcpy(right->publisher, temp->publisher);
                     strcpy(right->name, temp->name);
-                    right->discounts = temp->discounts;
-                    right->release_number = temp->release_number;
-                    right->release_frequency = temp->release_frequency;
+                    strcpy(right->discounts, temp->discounts);
+                    strcpy(right->release_number, temp->release_number);
+                    strcpy(right->release_frequency, temp->release_frequency);
                 }
                 right = right->next;                    //не забываем направлять указатель на следующий элемент (по подобию инкремента), иначе цикл зависнет
             }
@@ -1136,29 +1142,32 @@ public:
         while (left->next) {                 //Обходим по всем звеньям, за исключением крайнего правого
             while (right) {              //Обходим по всем звеньям, включая крайний правый (по всем относительно первого левого на текущий момент)
                 if (result>0) {        //Проверяем необходимость перестановки
-                    temp->price = left->price;              //И переставляем все внутренние элементы, за исключением указателей связи, местами
-                    temp->id = left->id;
+
+                    //И переставляем все внутренние элементы, за исключением указателей связи, местами
+
+                    strcpy(temp->price, left->price);
+                    strcpy(temp->id, left->id);
                     strcpy(temp->publisher, left->publisher);
                     strcpy(temp->name, left->name);
-                    temp->discounts = left->discounts;
-                    temp->release_number = left->release_number;
-                    temp->release_frequency = left->release_frequency;
+                    strcpy(temp->discounts, left->discounts);
+                    strcpy(temp->release_number, left->release_number);
+                    strcpy(temp->release_frequency, left->release_frequency);
 
-                    left->price = right->price;             //Сейчас у нас имеется только x, поэтому только его
-                    left->id = right->id;
+                    strcpy(left->price, right->price);
+                    strcpy(left->id, right->id);
                     strcpy(left->publisher, right->publisher);
                     strcpy(left->name, right->name);
-                    left->discounts = right->discounts;
-                    left->release_number = right->release_number;
-                    left->release_frequency = right->release_frequency;
+                    strcpy(left->discounts, right->discounts);
+                    strcpy(left->release_number, right->release_number);
+                    strcpy(left->release_frequency, right->release_frequency);
 
-                    right->price = temp->price;             //иначе бы  нужно было это проделывать для каждого несвязующего элемента
-                    right->id = temp->id;
+                    strcpy(right->price, temp->price);
+                    strcpy(right->id, temp->id);
                     strcpy(right->publisher, temp->publisher);
                     strcpy(right->name, temp->name);
-                    right->discounts = temp->discounts;
-                    right->release_number = temp->release_number;
-                    right->release_frequency = temp->release_frequency;
+                    strcpy(right->discounts, temp->discounts);
+                    strcpy(right->release_number, temp->release_number);
+                    strcpy(right->release_frequency, temp->release_frequency);
                 }
                 right = right->next;                    //не забываем направлять указатель на следующий элемент (по подобию инкремента), иначе цикл зависнет
             }
