@@ -688,17 +688,18 @@ public:
         Magazine *node_element = Head;
         while (node_element != nullptr)
         {
-            std::string loco = std::to_string(node_element->id);
+            std::string loco;
+            loco = node_element->id;
             loco += " ";
             loco += node_element->name;
             loco += " ";
-            loco += std::to_string(node_element->release_number);
+            loco += node_element->release_number;
             loco += " ";
-            loco += std::to_string(node_element->release_frequency);
+            loco += node_element->release_frequency;
             loco += " ";
-            loco += std::to_string(node_element->price);
+            loco += node_element->price;
             loco += " ";
-            loco += std::to_string(node_element->discounts);
+            loco += node_element->discounts;
             loco += " ";
             loco += node_element->publisher;
             loco += " ";
@@ -715,12 +716,12 @@ public:
     }
 
     // переменные для переноса из функции считывателя в загрузчик
-    int first;
+    char first[N];
     char second[N];
-    int third;
-    int fourth;
-    int fifth;
-    int sixth;
+    char third[N];
+    char fourth[N];
+    char fifth[N];
+    char sixth[N];
     char seventh[N];
 
     void load() {
@@ -733,7 +734,7 @@ public:
             switch (local_index) {
                 case 1:
                 {
-                    InformationSystem::first = atoi(data_from_file.c_str());
+                    strcpy(first, data_from_file.c_str());
                     local_index += 1;
                     break;
                 }
@@ -751,25 +752,25 @@ public:
                 }
                 case 3: // release num int
                 {
-                    InformationSystem::third = atoi(data_from_file.c_str());
+                    strcpy(third, data_from_file.c_str());
                     local_index += 1;
                     break;
                 }
                 case 4: // release_frequency int
                 {
-                    InformationSystem::fourth = atoi(data_from_file.c_str());
+                    strcpy(fourth, data_from_file.c_str());
                     local_index += 1;
                     break;
                 }
                 case 5: // price
                 {
-                    InformationSystem::fifth = atoi(data_from_file.c_str());
+                    strcpy(fifth, data_from_file.c_str());
                     local_index += 1;
                     break;
                 }
                 case 6: //discounts
                 {
-                    InformationSystem::sixth = atoi(data_from_file.c_str());
+                    strcpy(sixth, data_from_file.c_str());
                     local_index += 1;
                     break;
                 }
@@ -797,13 +798,15 @@ public:
     void adder(){
         Magazine *node_element = new Magazine;
         node_element->next = nullptr;
-        node_element->id = first;
+
+        strcpy(node_element->id, first);
         strcpy(node_element->name, second);
-        node_element->release_number = third;
-        node_element->release_frequency = fourth;
-        node_element->price = fifth;
-        node_element->discounts = sixth;
+        strcpy(node_element->release_number, third);
+        strcpy(node_element->release_frequency, fourth);
+        strcpy(node_element->price, fifth);
+        strcpy(node_element->discounts, sixth);
         strcpy(node_element->publisher, seventh);
+
         if (Head != nullptr) {
             node_element->prev = Tail;
             Tail->next = node_element;
