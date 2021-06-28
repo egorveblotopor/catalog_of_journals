@@ -1,9 +1,6 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <cstring>
-#include <cstdlib>
-#include <string>
 #include <sstream>
 #include <string.h>
 
@@ -72,14 +69,14 @@ public:
     }
 
 
-    class Publishers_list{
+    class PublishersList{
     public:
         Publishers *Head, *Tail;
         // конструктор
-        Publishers_list(): Head(nullptr), Tail(nullptr){};
+        PublishersList(): Head(nullptr), Tail(nullptr){};
 
         // деструктор
-        ~Publishers_list(){
+        ~PublishersList(){
             while (Head) {
                 Tail = Head->next;
                 delete Head;
@@ -353,7 +350,7 @@ public:
                 }
                 node_element = node_element->next;
             }
-            std::cout << "remove is succesfully finished" << std::endl;
+            std::cout << "remove is successfully finished" << std::endl;
             InformationSystem().menu();
         }
 
@@ -403,7 +400,7 @@ public:
     };
 
 
-    Publishers_list just;
+    PublishersList just;
 
 
     void show_main(){
@@ -573,7 +570,7 @@ public:
             }
             node_element = node_element->next;
         }
-        std::cout << "remove is succesfully finished" << std::endl;
+        std::cout << "remove is successfully finished" << std::endl;
         menu();
     }
 
@@ -732,7 +729,7 @@ public:
                     local_index += 1;
                     break;
                 }
-                case 2: //name char
+                case 2: //name
                 {
                     loco = data_from_file;
                     change_index = loco.find('\n');
@@ -744,13 +741,13 @@ public:
                     change_index = -1;
                     break;
                 }
-                case 3: // release num int
+                case 3: // release num
                 {
                     strcpy(third, data_from_file.c_str());
                     local_index += 1;
                     break;
                 }
-                case 4: // release_frequency int
+                case 4: // release_frequency
                 {
                     strcpy(fourth, data_from_file.c_str());
                     local_index += 1;
@@ -768,7 +765,7 @@ public:
                     local_index += 1;
                     break;
                 }
-                case 7: // publisher char
+                case 7: // publisher
                 {
                     strcpy(seventh, data_from_file.c_str());
                     adder();
@@ -986,15 +983,19 @@ public:
 
     void pick_show(){
         Magazine *node_element = Head;
+        std::cout << std::endl;
+        std::cout << std::endl;
         while (node_element != nullptr)
         {
-            std::cout << std::endl;
-            std::cout << '|'  <<  std::setfill(' ') << std::setw(10) << "index - " <<  std::setfill(' ') << std::setw(10) << node_element->id
-                      << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(10) << node_element->name
-                      << std::endl;
-            std::cout << std::endl;
+
+            std::cout  << '.'  <<  std::setfill('_') << std::setw(50) << '.' << std::endl;
+            std::cout << '|'  <<  std::setfill(' ') << std::setw(25) << "index - " <<  std::setfill(' ') << std::setw(25) << node_element->id << std::endl;
+            std::cout << "|" <<  std::setfill(' ') << std::setw(25) << "name - " <<  std::setfill(' ') << std::setw(25) << node_element->name << std::endl;
+            std::cout  << '|'  <<  std::setfill('_') << std::setw(50) << '|' << std::endl;
             node_element = node_element->next;
         }
+        std::cout << std::endl;
+        std::cout << std::endl;
     }
 
     void sort_show(){
@@ -1028,9 +1029,16 @@ public:
 
         Magazine *temp = new Magazine;              //Временное звено для хранения переставляемого всех значений переставляемого звена
 
+        char loco_1[N];
+        char loco_2[N];
+        int result;
+        strcpy(loco_1, left->name);
+        strcpy(loco_1, right->name);
+        result = strcmp(loco_1, loco_2);
+
         while (left->next) {                 //Обходим по всем звеньям, за исключением крайнего правого
             while (right) {              //Обходим по всем звеньям, включая крайний правый (по всем относительно первого левого на текущий момент)
-                if ((left->price) < (right->price)) {        //Проверяем необходимость перестановки
+                if (result>0) {        //Проверяем необходимость перестановки
 
                     //И переставляем все внутренние элементы, за исключением указателей связи, местами
 
@@ -1074,9 +1082,16 @@ public:
 
         Magazine *temp = new Magazine;              //Временное звено для хранения переставляемого всех значений переставляемого звена
 
+        char loco_1[N];
+        char loco_2[N];
+        int result;
+        strcpy(loco_1, left->name);
+        strcpy(loco_1, right->name);
+        result = strcmp(loco_1, loco_2);
+
         while (left->next) {                 //Обходим по всем звеньям, за исключением крайнего правого
             while (right) {              //Обходим по всем звеньям, включая крайний правый (по всем относительно первого левого на текущий момент)
-                if ((left->release_number) < (right->release_number)) {        //Проверяем необходимость перестановки
+                if (result>0) {        //Проверяем необходимость перестановки
 
                     //И переставляем все внутренние элементы, за исключением указателей связи, местами
 
@@ -1119,10 +1134,10 @@ public:
         Magazine *right = Head->next;          //Второй элемент — это пусть будет следующий за головой элемент
 
         Magazine *temp = new Magazine;              //Временное звено для хранения переставляемого всех значений переставляемого звена
+
         char loco_1[N];
         char loco_2[N];
         int result;
-
         strcpy(loco_1, left->name);
         strcpy(loco_1, right->name);
         result = strcmp(loco_1, loco_2);
@@ -1201,20 +1216,55 @@ public:
 
 
     void show_discounts(){
-        Magazine *node_element = Head;
-        while (node_element != nullptr){
-            if (node_element->discounts != 0){
-                std::cout << std::endl;
-                std::cout << '|'  <<  std::setfill(' ') << std::setw(10) << "index - " <<  std::setfill(' ') << std::setw(10) << node_element->id
-                          << "|" <<  std::setfill(' ') << std::setw(7) << "name - " <<  std::setfill(' ') << std::setw(10) << node_element->name
-                          << "|" <<  std::setfill(' ') << std::setw(7) << "accessible discount - " <<  std::setfill(' ') << std::setw(10) << node_element->discounts
-                          << std::endl;
-                std::cout << std::endl;
+        Magazine *left = Head;                 //Первый элемент — это пусть будет голова
+        Magazine *right = Head->next;          //Второй элемент — это пусть будет следующий за головой элемент
 
+        Magazine *temp = new Magazine;              //Временное звено для хранения переставляемого всех значений переставляемого звена
+
+        char loco_1[N];
+        char loco_2[N];
+        int result;
+        strcpy(loco_1, left->name);
+        strcpy(loco_1, right->name);
+        result = strcmp(loco_1, loco_2);
+
+        while (left->next) {                 //Обходим по всем звеньям, за исключением крайнего правого
+            while (right) {              //Обходим по всем звеньям, включая крайний правый (по всем относительно первого левого на текущий момент)
+                if (result>0) {        //Проверяем необходимость перестановки
+
+                    //И переставляем все внутренние элементы, за исключением указателей связи, местами
+
+                    strcpy(temp->price, left->price);
+                    strcpy(temp->id, left->id);
+                    strcpy(temp->publisher, left->publisher);
+                    strcpy(temp->name, left->name);
+                    strcpy(temp->discounts, left->discounts);
+                    strcpy(temp->release_number, left->release_number);
+                    strcpy(temp->release_frequency, left->release_frequency);
+
+                    strcpy(left->price, right->price);
+                    strcpy(left->id, right->id);
+                    strcpy(left->publisher, right->publisher);
+                    strcpy(left->name, right->name);
+                    strcpy(left->discounts, right->discounts);
+                    strcpy(left->release_number, right->release_number);
+                    strcpy(left->release_frequency, right->release_frequency);
+
+                    strcpy(right->price, temp->price);
+                    strcpy(right->id, temp->id);
+                    strcpy(right->publisher, temp->publisher);
+                    strcpy(right->name, temp->name);
+                    strcpy(right->discounts, temp->discounts);
+                    strcpy(right->release_number, temp->release_number);
+                    strcpy(right->release_frequency, temp->release_frequency);
+                }
+                right = right->next;                    //не забываем направлять указатель на следующий элемент (по подобию инкремента), иначе цикл зависнет
             }
-            node_element = node_element->next;
+            left = left->next;                              //не забываем направлять указатель на следующий элемент (по подобию инкремента), иначе цикл зависнет
+            right = left->next;                             //Поскольку второй указатель убежал немного вперёд, обязательно возвращаем его назад, это следующий элемент относительно текущего первого
         }
-        search_menu();
+        sort_show();
+        streamline_journals_menu();
     }
 
 };
