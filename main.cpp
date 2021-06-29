@@ -62,7 +62,9 @@ public:
             }
         }
 
+
         char pub_list_name_pub[N];
+
 
         int counter(){
             int index_loco = 0;
