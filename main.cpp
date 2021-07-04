@@ -121,6 +121,7 @@ public:
                         }
                         strcpy(first_pub, loco.c_str());
                         local_index += 1;
+                        int change_index = -1;
                         break;
                     }
                     case 2: //name char
